@@ -14,7 +14,12 @@
  */
 uint32_t *insts_emit(unsigned *nbytes, char *insts) {
     // check libunix.h --- create_file, write_exact, run_system, read_file.
-    unimplemented();
+    int fd = create_file("_temp.s");
+    write_exact(fd, insts, *nbytes);
+    run_system("arm-none-eabi-as --warn --fatal-warnings -mcpu=arm1176jzf-s -march=armv6zk _temp.s -o _temp.o");
+    run_system("arm-none-eabi-objcopy _temp.o -O binary _temp.bin");
+    unsigned size;
+    return (uint32_t *) read_file(&size, "_temp.bin");
 }
 
 /*
@@ -26,7 +31,13 @@ uint32_t *insts_emit(unsigned *nbytes, char *insts) {
  */
 void insts_check(char *insts, uint32_t *code, unsigned nbytes) {
     // make sure you print out something useful on mismatch!
-    unimplemented();
+    uint32_t *data = insts_emit(&nbytes, insts);
+
+    for(unsigned i = 0; i < nbytes / 4; i++) {
+        if (data[i] != code[i]) {
+            printf("[mismatch @ %x] given=%x, compiled=%x (inst #%d)", i * 4, code[i], data[i], i);
+        }
+    }
 }
 
 // check a single instruction.
