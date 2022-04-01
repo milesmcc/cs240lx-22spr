@@ -15,11 +15,11 @@
 uint32_t *insts_emit(unsigned *nbytes, char *insts) {
     // check libunix.h --- create_file, write_exact, run_system, read_file.
     int fd = create_file("_temp.s");
-    write_exact(fd, insts, *nbytes);
-    run_system("arm-none-eabi-as --warn --fatal-warnings -mcpu=arm1176jzf-s -march=armv6zk _temp.s -o _temp.o");
+    write_exact(fd, insts, strlen(insts));
+    run_system("echo >> _temp.s");
+    run_system("arm-none-eabi-as -mcpu=arm1176jzf-s -march=armv6zk _temp.s -o _temp.o");
     run_system("arm-none-eabi-objcopy _temp.o -O binary _temp.bin");
-    unsigned size;
-    return (uint32_t *) read_file(&size, "_temp.bin");
+    return (uint32_t *) read_file(nbytes, "_temp.bin");
 }
 
 /*
@@ -31,11 +31,14 @@ uint32_t *insts_emit(unsigned *nbytes, char *insts) {
  */
 void insts_check(char *insts, uint32_t *code, unsigned nbytes) {
     // make sure you print out something useful on mismatch!
-    uint32_t *data = insts_emit(&nbytes, insts);
+    unsigned emitted_nbytes;
+    uint32_t *data = insts_emit(&emitted_nbytes, insts);
 
     for(unsigned i = 0; i < nbytes / 4; i++) {
         if (data[i] != code[i]) {
-            printf("[mismatch @ %x] given=%x, compiled=%x (inst #%d)", i * 4, code[i], data[i], i);
+            printf("[mismatch @ %x] given=%x, compiled=%x (inst #%d)\n", i * 4, code[i], data[i], i);
+        } else {
+            // printf("[match @ %x] given=%x, compiled=%x (inst #%d)\n", i * 4, code[i], data[i], i);
         }
     }
 }
@@ -72,6 +75,18 @@ uint32_t emit_rrr(const char *op, const char *d, const char *s1, const char *s2)
     return *c;
 }
 
+// helper function for reverse engineering.  you should refactor its interface
+// so your code is better.
+uint32_t emit_rrrr(const char *op, const char *d, const char *s1, const char *s2, const char *s3) {
+    char buf[1024];
+    sprintf(buf, "%s %s, %s, %s, %s", op, d, s1, s2, s3);
+
+    uint32_t n;
+    uint32_t *c = insts_emit(&n, buf);
+    assert(n == 4);
+    return *c;
+}
+
 // overly-specific.  some assumptions:
 //  1. each register is encoded with its number (r0 = 0, r1 = 1)
 //  2. related: all register fields are contiguous.
@@ -96,44 +111,64 @@ void derive_op_rrr(const char *name, const char *opcode,
 
     unsigned d_off = 0, src1_off = 0, src2_off = 0, op = ~0;
 
-    uint32_t always_0 = ~0, always_1 = ~0;
+    uint8_t offsets[4];
+    uint32_t changed_full = 0;
 
-    // compute any bits that changed as we vary d.
-    for(unsigned i = 0; dst[i]; i++) {
-        uint32_t u = emit_rrr(opcode, dst[i], s1, s2);
+    for(int idx = 0; idx < 4; idx++) {
+        uint32_t always_0 = ~0, always_1 = ~0;
 
-        // if a bit is always 0 then it will be 1 in always_0
-        always_0 &= ~u;
+        // Hack
+        const char **vals;
+        if (idx == 0) { vals = dst; };
+        if (idx == 1) { vals = src1; };
+        if (idx == 2) { vals = src2; };
 
-        // if a bit is always 1 it will be 1 in always_1, otherwise 0
-        always_1 &= u;
+        // compute any bits that changed as we vary d.
+        for(unsigned i = 0; vals[i]; i++) {
+            uint32_t u;
+            if (idx == 0) u = emit_rrr(opcode, vals[i], s1, s2);
+            if (idx == 1) u = emit_rrr(opcode, d, vals[i], s2);
+            if (idx == 2) u = emit_rrr(opcode, d, s1, vals[i]);
+
+            // if a bit is always 0 then it will be 1 in always_0
+            always_0 &= ~u;
+
+            // if a bit is always 1 it will be 1 in always_1, otherwise 0
+            always_1 &= u;
+        }
+
+        if(always_0 & always_1) 
+            panic("impossible overlap: always_0 = %x, always_1 %x\n", 
+                always_0, always_1);
+
+        // bits that never changed
+        uint32_t never_changed = always_0 | always_1;
+        // bits that changed: these are the register bits.
+        uint32_t changed = ~never_changed;
+
+        changed_full |= changed;
+
+        // find the offset.  we assume register bits are contig and within 0xf
+        unsigned off = ffs(changed);
+        if (idx == 0) { d_off = off - 1; };
+        if (idx == 1) { src1_off = off - 1; };
+        if (idx == 2) { src2_off = off - 1; };
+        
+        // check that bits are contig and at most 4 bits are set.
+        // if(((changed >> off) & ~0xf) != 0)
+        //     panic("weird instruction!  expecting at most 4 contig bits: %x\n", changed);
     }
 
-    if(always_0 & always_1) 
-        panic("impossible overlap: always_0 = %x, always_1 %x\n", 
-            always_0, always_1);
-
-    // bits that never changed
-    uint32_t never_changed = always_0 | always_1;
-    // bits that changed: these are the register bits.
-    uint32_t changed = ~never_changed;
-
-    output("register dst are bits set in: %x\n", changed);
-
-    // find the offset.  we assume register bits are contig and within 0xf
-    d_off = ffs(changed);
-    
-    // check that bits are contig and at most 4 bits are set.
-    if(((changed >> d_off) & ~0xf) != 0)
-        panic("weird instruction!  expecting at most 4 contig bits: %x\n", changed);
     // refine the opcode.
-    op &= never_changed;
+    op &= ~(changed_full);
+    op &= emit_rrr(opcode, d, s1, s2);
+
     output("opcode is in =%x\n", op);
 
     // emit: NOTE: obviously, currently <src1_off>, <src2_off> are not 
     // defined (so solve for them) and opcode needs to be refined more.
     output("static int %s(uint32_t dst, uint32_t src1, uint32_t src2) {\n", name);
-    output("    return %x | (dst << %d) | (src1 << %d) | (src2 << %d)\n",
+    output("    return 0x%x | (dst << %d) | (src1 << %d) | (src2 << %d);\n",
                 op,
                 d_off,
                 src1_off,
@@ -174,6 +209,8 @@ int main(void) {
     insts_print("bx lr");
     insts_print("mov r0, #1");
     insts_print("nop");
+    insts_print("add r0, r1, r2");
+    insts_print("add r3, r4, r5");
     output("\n");
     output("success!\n");
 
@@ -196,6 +233,12 @@ int main(void) {
     check_one_inst("add r9, r10, r11", arm_add(arm_r9, arm_r10, arm_r11));
     check_one_inst("add r12, r13, r14", arm_add(arm_r12, arm_r13, arm_r14));
     check_one_inst("add r15, r7, r3", arm_add(arm_r15, arm_r7, arm_r3));
+    check_one_inst("add r0, r1, r2", arm_add_gen(arm_r0, arm_r1, arm_r2));
+    check_one_inst("add r3, r4, r5", arm_add_gen(arm_r3, arm_r4, arm_r5));
+    check_one_inst("add r6, r7, r8", arm_add_gen(arm_r6, arm_r7, arm_r8));
+    check_one_inst("add r9, r10, r11", arm_add_gen(arm_r9, arm_r10, arm_r11));
+    check_one_inst("add r12, r13, r14", arm_add_gen(arm_r12, arm_r13, arm_r14));
+    check_one_inst("add r15, r7, r3", arm_add_gen(arm_r15, arm_r7, arm_r3));
     output("success!\n");
 
     // part 4: implement the code so it will derive the add instruction.
@@ -207,8 +250,14 @@ int main(void) {
                 "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15",
                 0 
     };
+    const char *my_imms[] = {"#0", "#1", "#7", "#8", "#9", "#15", "#16", "#17", "#255", 0};
+    const char *my_empty[] = {"\0"};
+
     // XXX: should probably pass a bitmask in instead.
-    derive_op_rrr("arm_add", "add", all_regs,all_regs,all_regs);
+    derive_op_rrr("arm_add", "add", all_regs, all_regs, all_regs);
+    
+    derive_op_rrr("arm_add_imm8", "add", all_regs, all_regs, my_imms);
+    derive_op_rrr("add_or_imm_rot", "bx", all_regs, my_empty, my_empty);
     output("did something: now use the generated code in the checks above!\n");
 
     // get encodings for other instructions, loads, stores, branches, etc.

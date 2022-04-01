@@ -25,5 +25,12 @@
 // make sure to close the file descriptor (this will
 // matter for later labs).
 void *read_file(unsigned *size, const char *name) {
-    unimplemented();
+    struct stat file_info;
+    assert(stat(name, &file_info) == 0);
+    *size = file_info.st_size;
+    void *buf = calloc(file_info.st_size + 4, sizeof(char));
+    FILE *file = fopen(name, "rb");
+    fread(buf, 1, *size, file);
+    fclose(file);
+    return buf;
 }

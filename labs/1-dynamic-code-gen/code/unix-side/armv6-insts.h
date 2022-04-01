@@ -90,16 +90,24 @@ _Static_assert(arm_mvn_op == 0b1111, "bad num list");
 // we do not do any carries, so S = 0.
 static inline unsigned arm_add(uint8_t rd, uint8_t rs1, uint8_t rs2) {
     assert(arm_add_op == 0b0100);
-    unimplemented();
+    unsigned val = 0xe0800000;
+    val = bits_set(val, 12, 15, rd);
+    val = bits_set(val, 16, 19, rs1);
+    val = bits_set(val, 0, 3, rs2);
+    return val;
+}
+
+static int arm_add_gen(uint32_t dst, uint32_t src1, uint32_t src2) {
+    return 0xe0800000 | (dst << 12) | (src1 << 16) | (src2 << 0);
 }
 
 // <add> of an immediate
 static inline uint32_t arm_add_imm8(uint8_t rd, uint8_t rs1, uint8_t imm) {
-    unimplemented();
+    return 0xe2800000 | (rd << 12) | (rs1 << 16) | (imm << 0);
 }
 
 static inline uint32_t arm_bx(uint8_t reg) {
-    unimplemented();
+    return 0xe12fff10 | reg;
 }
 
 // load an or immediate and rotate it.
