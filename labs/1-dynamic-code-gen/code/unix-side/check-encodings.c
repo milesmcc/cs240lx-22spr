@@ -233,12 +233,16 @@ int main(void) {
     check_one_inst("add r9, r10, r11", arm_add(arm_r9, arm_r10, arm_r11));
     check_one_inst("add r12, r13, r14", arm_add(arm_r12, arm_r13, arm_r14));
     check_one_inst("add r15, r7, r3", arm_add(arm_r15, arm_r7, arm_r3));
-    check_one_inst("add r0, r1, r2", arm_add_gen(arm_r0, arm_r1, arm_r2));
-    check_one_inst("add r3, r4, r5", arm_add_gen(arm_r3, arm_r4, arm_r5));
-    check_one_inst("add r6, r7, r8", arm_add_gen(arm_r6, arm_r7, arm_r8));
-    check_one_inst("add r9, r10, r11", arm_add_gen(arm_r9, arm_r10, arm_r11));
-    check_one_inst("add r12, r13, r14", arm_add_gen(arm_r12, arm_r13, arm_r14));
-    check_one_inst("add r15, r7, r3", arm_add_gen(arm_r15, arm_r7, arm_r3));
+    // check_one_inst("add r0, r1, r2", arm_add_gen(arm_r0, arm_r1, arm_r2));
+    // check_one_inst("add r3, r4, r5", arm_add_gen(arm_r3, arm_r4, arm_r5));
+    // check_one_inst("add r6, r7, r8", arm_add_gen(arm_r6, arm_r7, arm_r8));
+    // check_one_inst("add r9, r10, r11", arm_add_gen(arm_r9, arm_r10, arm_r11));
+    // check_one_inst("add r12, r13, r14", arm_add_gen(arm_r12, arm_r13, arm_r14));
+    // check_one_inst("add r15, r7, r3", arm_add_gen(arm_r15, arm_r7, arm_r3));
+    output("checking push...\n");
+    check_one_inst("push {lr}", arm_push(arm_lr));
+    output("checking pop...\n");
+    check_one_inst("pop {lr}", arm_pop(arm_lr));
     output("success!\n");
 
     // part 4: implement the code so it will derive the add instruction.
