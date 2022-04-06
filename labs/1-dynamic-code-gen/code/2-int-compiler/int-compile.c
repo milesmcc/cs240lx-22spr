@@ -1,10 +1,12 @@
 #include "rpi.h"
+#include <stdarg.h>
 #include "../unix-side/armv6-insts.h"
 
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))
 #include "cycle-util.h"
 
 typedef void (*int_fp)(void);
+#define THUNK_OFFSET 32
 
 static volatile unsigned cnt = 0;
 
@@ -18,9 +20,44 @@ void int_5() { cnt++; }
 void int_6() { cnt++; }
 void int_7() { cnt++; }
 
+void say_hello(unsigned a, unsigned b, unsigned c) {
+    printk("a = %d, b = %d, c = %d\n", a, b, c);
+}
+
 void generic_call_int(int_fp *intv, unsigned n) { 
     for(unsigned i = 0; i < n; i++)
         intv[i]();
+}
+
+void *int_compile(int_fp *intv, unsigned n) {
+    uint32_t *code = kmalloc(256*4);
+
+    assert(n < 250);
+    code[0] = arm_push(arm_lr);
+    for(int i = 0; i < n - 1; i++) {
+        code[i+1] = arm_bl((uint32_t) &code[i+1], (uint32_t) intv[i]);
+    }
+    code[n] = arm_pop(arm_lr);
+    code[n+1] = arm_b((uint32_t) &code[n + 1], (uint32_t) intv[n - 1]);
+
+    return code;
+}
+
+int_fp thunk(void *func, int n, ...) {
+    unsigned *code = kmalloc(256);
+    assert(n < 6);
+
+    va_list args;
+    va_start(args, n);
+    for (int i = 0; i < n; i++) {
+        uint32_t arg = va_arg(args, uint32_t);
+        code[i] = arm_ldr(i, arm_pc, (THUNK_OFFSET * 4 - 8));
+        code[i + THUNK_OFFSET] = arg;
+    }
+
+    code[n] = arm_b((uint32_t) &code[n], (uint32_t) func);
+
+    return (int_fp) code;
 }
 
 // you will generate this dynamically.
@@ -62,9 +99,40 @@ void notmain(void) {
     demand(cnt == n*10, "cnt=%d, expected=%d\n", cnt, n*10);
 
     // rewrite to generate specialized caller dynamically.
+
+    // uint32_t bxlr = arm_bx(arm_lr);
+    // for(int i = 0; i < n - 1; i++) { // Don't rewrite last function
+    //     uint32_t next = (uint32_t) intv[i+1];
+    //     uint32_t *func = (uint32_t *) intv[i];
+        
+    //     int idx = 0;
+    //     for(int idx = 0; func[idx] != bxlr; idx++) {
+    //         printk("not %d...\n", idx);
+    //         // nop
+    //     }
+
+    //     func[idx] = arm_b((uint32_t) &func[idx], next);
+    //     printk("Rewriting %x to call %x (%x)", &func[idx], next, func[idx]);
+    // }
+
     cnt = 0;
-    TIME_CYC_PRINT10("cost of specialized int calling", specialized_call_int() );
+    TIME_CYC_PRINT10("cost of specialized int calling", specialized_call_int());
     demand(cnt == n*10, "cnt=%d, expected=%d\n", cnt, n*10);
+
+    cnt = 0;
+    void *code = int_compile(intv, n);
+    void (*fp)(void) = (typeof(fp))code;
+
+    TIME_CYC_PRINT10("cost of int compile calling", fp());
+    demand(cnt == n*10, "cnt=%d, expected=%d\n", cnt, n*10);
+
+    int_fp thunked = thunk(say_hello, 3, 5, 500, 1003242);
+    thunked();
+
+    int_fp gooo = thunk(printk, 1, "gooooooo!\n");
+    gooo();
+
+    printk("done!\n");
 
     clean_reboot();
 }

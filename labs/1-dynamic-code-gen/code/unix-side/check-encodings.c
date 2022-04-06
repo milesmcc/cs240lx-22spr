@@ -243,6 +243,7 @@ int main(void) {
     check_one_inst("push {lr}", arm_push(arm_lr));
     output("checking pop...\n");
     check_one_inst("pop {lr}", arm_pop(arm_lr));
+
     output("success!\n");
 
     // part 4: implement the code so it will derive the add instruction.

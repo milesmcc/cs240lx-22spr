@@ -118,6 +118,11 @@ static inline uint32_t arm_bl(uint32_t from, uint32_t to) {
     return 0xeb000000 | ((delta) & (0xffffff));
 }
 
+static inline uint32_t arm_b(uint32_t from, uint32_t to) {
+    int32_t delta = (to - (from + 8)) / 4;
+    return 0xea000000 | ((delta) & (0xffffff));
+}
+
 static inline uint32_t arm_push(uint32_t reg) {
     return 0xe52d0004 | (reg << 12);
 }
@@ -128,6 +133,10 @@ static inline uint32_t arm_pop(uint32_t reg) {
 
 static inline uint32_t arm_mov(uint32_t dst, uint32_t src) {
     return 0xe1a00000 | (dst << 12) | (src << 0);
+}
+
+static inline uint32_t arm_mov_imm(uint32_t dst, uint32_t val) {
+    return 0xe3a00000 | (dst << 12) | (val << 0);
 }
 
 #endif
