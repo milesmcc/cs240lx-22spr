@@ -6,7 +6,7 @@
 #include "cycle-util.h"
 
 typedef void (*int_fp)(void);
-#define THUNK_OFFSET 32
+#define THUNK_OFFSET 64
 
 static volatile unsigned cnt = 0;
 
@@ -21,7 +21,7 @@ void int_6() { cnt++; }
 void int_7() { cnt++; }
 
 void say_hello(unsigned a, unsigned b, unsigned c) {
-    printk("a = %d, b = %d, c = %d\n", a, b, c);
+    printk("a = %x, b = %x, c = %x\n", a, b, c);
 }
 
 void generic_call_int(int_fp *intv, unsigned n) { 
@@ -44,19 +44,31 @@ void *int_compile(int_fp *intv, unsigned n) {
 }
 
 int_fp thunk(void *func, int n, ...) {
-    unsigned *code = kmalloc(256);
-    assert(n < 6);
+    unsigned *code = kmalloc(1024);
+    assert(n < 12);
 
     va_list args;
     va_start(args, n);
+    unsigned loc = 0;
+
+    unsigned arg_vals[12];
     for (int i = 0; i < n; i++) {
-        uint32_t arg = va_arg(args, uint32_t);
-        code[i] = arm_ldr(i, arm_pc, (THUNK_OFFSET * 4 - 8));
-        code[i + THUNK_OFFSET] = arg;
+        arg_vals[i] = va_arg(args, uint32_t);
     }
 
-    code[n] = arm_b((uint32_t) &code[n], (uint32_t) func);
+    for (int i = 0; i < n; i++) {
+        if (i < 4) {
+            code[loc++] = arm_ldr(i, arm_pc, (THUNK_OFFSET - 2) * 4);
+            code[loc - 1 + THUNK_OFFSET] = arg_vals[i];
+        } else {
+            int effective_arg = (n - i + 3);
+            code[loc++] = arm_ldr(arm_r12, arm_pc, (THUNK_OFFSET - 2) * 4);
+            code[loc - 1 + THUNK_OFFSET] = arg_vals[effective_arg];
+            code[loc++] = arm_push(arm_r12);
+        }
+    }
 
+    code[loc] = arm_b((uint32_t) &code[loc], (uint32_t) func);
     return (int_fp) code;
 }
 
@@ -92,7 +104,7 @@ void notmain(void) {
     // jump-threadig, must either:
     //  1. generate code when cache is off.
     //  2. invalidate cache before use.
-    // enable_cache();
+    enable_cache();
 
     cnt = 0;
     TIME_CYC_PRINT10("cost of generic-int calling",  generic_call_int(intv,n));
@@ -126,10 +138,10 @@ void notmain(void) {
     TIME_CYC_PRINT10("cost of int compile calling", fp());
     demand(cnt == n*10, "cnt=%d, expected=%d\n", cnt, n*10);
 
-    int_fp thunked = thunk(say_hello, 3, 5, 500, 1003242);
+    int_fp thunked = thunk(say_hello, 3, 5, 500, 3);
     thunked();
 
-    int_fp gooo = thunk(printk, 1, "gooooooo!\n");
+    int_fp gooo = thunk(printk, 7, "gooooooo, 1=%d, 2=%d, 3=%d, 4=%d, 5=%d, 6=%d\n", 1, 2, 3, 4, 5, 6);
     gooo();
 
     printk("done!\n");
