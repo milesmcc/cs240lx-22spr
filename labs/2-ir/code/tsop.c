@@ -4,9 +4,13 @@
 // file and put in libpi/src so can use later.
 
 #include "rpi.h"
+#include "rpi-interrupts.h"
+
 enum { ir_eps = 200 };
 
 #define IN_PIN 21
+#define OUT_PIN 5
+#define TRANSMIT_USEC (1000000 / (38000 * 2)) 
 
 // we should never get this.
 enum { NOISE = 0 } ;
@@ -25,6 +29,38 @@ const char *key_to_str(unsigned x) {
         case 0xc3dea35c: return "SOURCE";
         case 0xc3dfe21c: return "POWER";
         default: return 0;
+    }
+}
+
+static void transmit_for(int pin, unsigned time) {
+    unsigned rb = timer_get_usec();
+    while (1) {
+        gpio_set_on(pin);
+        delay_us(TRANSMIT_USEC);
+        gpio_set_off(pin);
+        delay_us(TRANSMIT_USEC);
+        
+        unsigned ra = timer_get_usec();
+        if ((ra - rb) >= time) {
+            break;
+        }
+    }
+}
+
+static void transmit_value(int pin, unsigned value) {
+    // Send header
+    transmit_for(pin, 4500);
+    delay_us(4500);
+
+    // Start sending the data
+    for(int i = 31; i >= 0; i--) {
+        int val = (value >> i) & 1;
+        if (val) {
+            transmit_for(pin, 1600);
+        } else {
+            transmit_for(pin, 600);
+        }
+        delay_us(600);
     }
 }
 
@@ -50,6 +86,7 @@ static int abs(int x) {
 
 // return 0 if e is closer to <lb>, 1 if its closer to <ub>
 static int pick(struct readings *e, unsigned lb, unsigned ub) {
+    assert(e->v);
     int len = e->usec;
     unsigned lb_len = abs((int)lb - len);
     unsigned ub_len = abs((int)ub - len);
@@ -68,35 +105,15 @@ int is_header(struct readings *r, unsigned n) {
     return (r[n].usec > 3750) && (r[n].v == 0) && (r[n+1].usec > 3750) && (r[n+1].v == 1);
 }
 
-// convert <r> into an integer by or'ing in 0 or 1 depending on the 
-// time value.
-//
-// assert that they are seperated by skips!
-unsigned convert(struct readings *r, unsigned n) {
-    printk("converting %d readings...\n");
-    uint32_t val = 0;
+int find_header(struct readings *r, unsigned n) {
+    if (n < 4) {return 0;}
     int start = 0;
     for(int i = 0; i < n - 1; i++) {
         if(is_header(r, i)) {
             start = i + 3;
         }
     }
-    assert(start > 0);
-    printk("converting n = %d\n", n - start);
-    for(int i = start; i < n; i += 2) {
-        if (is_header(r, i)) {
-            break;
-        }
-
-        val |= pick(&r[i], 600, 1600);
-        val <<= 1;
-        // printk("    %d = %d for %d\n", i, r[i].v, r[i].usec);
-        if (i < (n - 1)) {
-            // printk("    %d = %d for %d\n", i+1, r[i+1].v, r[i+1].usec);
-            assert(is_skip(&r[i + 1]));
-        }
-    }
-    return val;
+    return start;
 }
 
 static void print_readings(struct readings *r, int n) {
@@ -108,10 +125,40 @@ static void print_readings(struct readings *r, int n) {
         printk("\t%d: %d = %d usec\n", i, r[i].v, r[i].usec);
     }
     printk("readings=%d\n", n);
-    if(!is_header(r,n))
-        printk("NOISE\n");
-    else
-        printk("convert=%x\n", convert(r,n));
+    // if(!is_header(r,n))
+    //     printk("NOISE\n");
+    // else
+    //     printk("convert=%x\n", convert(r,n));
+}
+
+// convert <r> into an integer by or'ing in 0 or 1 depending on the 
+// time value.
+//
+// assert that they are seperated by skips!
+unsigned convert(struct readings *r, unsigned n) {
+    printk("converting %d readings...\n");
+    int start = find_header(r, n);
+    assert(start > 0);
+
+    print_readings(r, (int)n);
+
+    printk("converting n = %d\n", n - start);
+    uint32_t val = 0;
+    for(int i = start; i < n; i += 2) {
+        if (is_header(r, i)) {
+            break;
+        }
+
+        val |= pick(&r[i], 600, 1600);
+        val <<= 1;
+        // printk("    %d = %d for %d\n", i, r[i].v, r[i].usec);
+        if (i < (n - 1)) {
+            // printk("    %d = %d for %d\n", i+1, r[i+1].v, r[i+1].usec);
+            printk("%d => %d for %d\n", i + 1, r[i + 1].v, r[i+1].usec);
+            assert(is_skip(&r[i + 1]));
+        }
+    }
+    return val;
 }
 
 // read in values until we get a timeout, return the number of readings.  
@@ -139,9 +186,39 @@ int tsop_init(int input) {
     return 1;
 }
 
-void notmain(void) {
-    int in = 21;
+static unsigned int_readings_n;
+static reading int_readings[256];
+
+void interrupt_vector(unsigned pc) {
+    static unsigned last_time = 0;
+    static unsigned last_val = 0;
+    
+    unsigned now = timer_get_usec();
+    unsigned val = gpio_read(IN_PIN);
+    gpio_event_clear(IN_PIN);
+
+    if (last_time == 0) {
+        // Exit early on first invocation
+        last_time = now;
+        last_val = val;
+        return;
+    }
+
+    if(val != last_val) {
+        unsigned time_diff = now - last_time;
+        int_readings[int_readings_n].usec = time_diff;
+        int_readings[int_readings_n].v = !last_val;
+        int_readings_n++;
+
+        last_time = now;
+        last_val = val;
+    }
+}
+
+void sync_read(void) {
+    int in = IN_PIN;
     tsop_init(in);
+
     output("about to start reading\n");
 
     // very dumb starter code
@@ -165,5 +242,61 @@ void notmain(void) {
             {}
     }
 	printk("stopping ir send/rec!\n");
+}
+
+void interrupt_read() {
+    int in = 21;
+    tsop_init(in);
+    
+    int_init();
+    gpio_int_rising_edge(in);
+    gpio_int_falling_edge(in);
+    system_enable_interrupts();
+
+    gpio_set_output(OUT_PIN);
+
+    output("about to start reading\n");
+
+    // very dumb starter code
+    while(1) {
+        int_readings_n = 0;
+        delay_ms(1000);
+
+        transmit_value(OUT_PIN, 0xdeadbeef);
+    
+        if(!find_header(int_readings, int_readings_n)) {
+            output(".");
+            continue;
+        } else {
+            output(" found header!\n");
+        }
+        unsigned x = ~(convert(int_readings, int_readings_n) >> 1);
+        output("converted to %x\n", x);
+        const char *key = key_to_str(x);
+        if(key)
+            printk("%s\n", key);
+        else
+            // failed: dump out the data so we can figure out what happened.
+            // print_readings(r,n);
+            {}
+    }
+	printk("stopping ir send/rec!\n");
+}
+
+void sync_write() {
+    gpio_set_output(OUT_PIN);
+
+    for(int i = 0; i < 6400; i++) {
+        unsigned to_transmit = i * 1047;
+        printk("Transmitting %x...\n", to_transmit);
+        transmit_value(OUT_PIN, i);
+        delay_ms(200);
+    } 
+}
+
+void notmain(void) {
+    // sync_write();
+    // sync_read();
+    interrupt_read();
     clean_reboot();
 }

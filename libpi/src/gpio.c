@@ -1,19 +1,19 @@
 /*
- * write code to allow blinking using arbitrary pins.    
+ * write code to allow blinking using arbitrary pins.
  * Implement:
  *	- gpio_set_output(pin) --- set GPIO <pin> as an output (vs input) pin.
  *	- gpio_set_on(pin) --- set the GPIO <pin> on.
  * 	- gpio_set_off(pin) --- set the GPIO <pin> off.
- * Use the minimal number of loads and stores to GPIO memory.  
+ * Use the minimal number of loads and stores to GPIO memory.
  *
  * start.s defines a of helper functions (feel free to look at the assembly!  it's
  *  not tricky):
- *      uint32_t get32(volatile uint32_t *addr) 
+ *      uint32_t get32(volatile uint32_t *addr)
  *              --- return the 32-bit value held at <addr>.
  *
- *      void put32(volatile uint32_t *addr, uint32_t v) 
+ *      void put32(volatile uint32_t *addr, uint32_t v)
  *              -- write the 32-bit quantity <v> to <addr>
- * 
+ *
  * Check-off:
  *  1. get a single LED to blink.
  *  2. attach an LED to pin 19 and another to pin 20 and blink in opposite order (i.e.,
