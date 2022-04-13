@@ -28,7 +28,10 @@ void notmain(void) {
     cycle_cnt_init();
 
     // keep it seperate so easy to look at assembly.
-    test_gen(pin, 11, CYCLE_PER_FLIP);
+    while (1) {
+        test_gen(pin, 11, CYCLE_PER_FLIP);
+        delay_ms(1000);
+    }
 
     clean_reboot();
 }

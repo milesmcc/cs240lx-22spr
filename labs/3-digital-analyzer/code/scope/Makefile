@@ -2,7 +2,7 @@
 TEST_SRC = scope.c
 
 # pick one of your attachment points (first or last) consistently.
-BOOTLOADER = my-install -first
+BOOTLOADER = my-install /dev/cu.usbserial-2
 
 # your source, shared by driver code.
 #   if you want to use our staff-hc-sr04.o,
@@ -13,6 +13,8 @@ BOOTLOADER = my-install -first
 
 # set RUN = 1 if you want the code to automatically run after building.
 RUN = 1
+
+OPT_LEVEL = -Ofast
 
 DEPS = ./Makefile
 SUPPORT_OBJS := $(SRC:.c=.o)

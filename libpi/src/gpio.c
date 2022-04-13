@@ -83,8 +83,6 @@ void gpio_write(unsigned pin, unsigned v) {
 }
 
 int gpio_read(unsigned pin) {
-    if(pin >= 32)
-        return -1;
     unsigned bank  = (gpio_lev0 + pin/32);
     unsigned off = (pin%32);
     return DEV_VAL32((GET32(bank) >> off) & 1);

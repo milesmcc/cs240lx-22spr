@@ -14,6 +14,12 @@ dump_samples(log_ent_t *l, unsigned n, unsigned period) {
     unsigned tot = 0, tot_err = 0;
 
     unsigned prev = 0;
+    if (n == 0) {
+        printk("No samples to print!\n");
+        return 0;
+    }
+    
+    printk("Dumping %d samples: ==============\n", n);
     for(int i = 0; i < n-1; i++) {
         log_ent_t *e = &l[i];
 
