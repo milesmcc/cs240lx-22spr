@@ -56,16 +56,12 @@ void gpio_set_output(unsigned pin) {
 }
 
 // set <pin> on.
-void gpio_set_on(unsigned pin) {
-    if(pin >= 32)
-        return;
+inline void gpio_set_on(unsigned pin) {
     PUT32(gpio_set0, 1 << pin);
 }
 
 // set <pin> off
-void gpio_set_off(unsigned pin) {
-    if(pin >= 32)
-        return;
+inline void gpio_set_off(unsigned pin) {
     PUT32(gpio_clr0, 1 << pin);
 }
 

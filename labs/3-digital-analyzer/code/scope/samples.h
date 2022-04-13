@@ -9,8 +9,7 @@ typedef struct {
 
 // dump out the log, calculating the error at each point,
 // and the absolute cumulative error.
-static inline unsigned 
-dump_samples(log_ent_t *l, unsigned n, unsigned period) {
+static inline unsigned dump_samples(log_ent_t *l, unsigned n, unsigned period) {
     unsigned tot = 0, tot_err = 0;
 
     unsigned prev = 0;
@@ -18,7 +17,7 @@ dump_samples(log_ent_t *l, unsigned n, unsigned period) {
         printk("No samples to print!\n");
         return 0;
     }
-    
+
     printk("Dumping %d samples: ==============\n", n);
     for(int i = 0; i < n-1; i++) {
         log_ent_t *e = &l[i];
@@ -33,6 +32,7 @@ dump_samples(log_ent_t *l, unsigned n, unsigned period) {
 
         printk(" %d: val=%d, time=%d, tot=%d: exp=%d (err=%d, toterr=%d)\n", i, e->v, ncyc, tot, exp, err, tot_err);
     }
+    printk("AVERAGE ERROR: %d\n", tot_err / 8);
     return tot_err;
 }
 

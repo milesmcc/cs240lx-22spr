@@ -40,4 +40,6 @@ SRC :=  $(SRC)                              \
 
 DEPS += ./Makefile ./manifest.mk
 
+OPT_LEVEL = -Ofast
+
 include ./manifest.mk
