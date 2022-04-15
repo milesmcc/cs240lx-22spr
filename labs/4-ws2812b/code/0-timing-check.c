@@ -54,7 +54,7 @@ time_check(const char *fn, int pin, void (*fp)(unsigned), int exp) {
 	// +/- 10 cycles seems right?
 	// const unsigned tol = 10;
 	// wtf, why so high?
-    int tol = 20;
+    int tol = 40;
 	printk("%s: expected %u cycles, got %u cycles\n", fn, exp, t);
 	assert(t <= (exp + tol) && t >= (exp - tol));
 }

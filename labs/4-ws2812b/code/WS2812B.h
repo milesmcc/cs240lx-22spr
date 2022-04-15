@@ -74,11 +74,11 @@
     // can flip between.
     enum { 
         // to send a 1: set pin high for T1H ns, then low for T0H ns.
-        T1H = ns_to_cycles(0),        // Width of a 1 bit in ns
-        T0H = ns_to_cycles(0),        // Width of a 0 bit in ns
+        T1H = ns_to_cycles(900),        // Width of a 1 bit in ns
+        T0H = ns_to_cycles(350),        // Width of a 0 bit in ns
         // to send a 0: set pin high for T1L ns, then low for T0L ns.
-        T1L = ns_to_cycles(0),        // Width of a 1 bit in ns
-        T0L = ns_to_cycles(0),        // Width of a 0 bit in ns
+        T1L = ns_to_cycles(350),        // Width of a 1 bit in ns
+        T0L = ns_to_cycles(900),        // Width of a 0 bit in ns
 
         // to make the LED switch to the new values, old the pin low for FLUSH ns
         FLUSH = ns_to_cycles(50 *1000)    // how long to hold low to flush
@@ -110,18 +110,26 @@
 #define gpio_set_off "error"
 #define gpio_write "error"
 
+#define GPIO_BASE 0x20200000
+
+static volatile unsigned *gpio_set0  = (unsigned *)(GPIO_BASE + 0x1C);
+static volatile unsigned *gpio_clr0  = (unsigned *)(GPIO_BASE + 0x28);
+static volatile unsigned *gpio_lev0  = (unsigned *)(GPIO_BASE + 0x34);
+
 // duplicate set_on/off so we can inline to reduce overhead.
 // they have to run in < the delay we are shooting for.
 static inline void gpio_set_on_raw(unsigned pin) {
-    unimplemented();
+    *gpio_set0 = 1 << pin;
 }
 static inline void gpio_set_off_raw(unsigned pin) {
-    unimplemented();
+    *gpio_clr0 = 1 << pin;
 }
 
 // use cycle_cnt_read() to delay <n_cyc> cycles measured from <start_cyc>
 static inline void delay_ncycles(unsigned start_cyc, unsigned n_cyc) {
-    unimplemented();
+    unsigned c;
+    while(((c = cycle_cnt_read()) - start_cyc) < (n_cyc - 5))
+        ;
 }
 
 
@@ -137,7 +145,7 @@ static inline void delay_ncycles(unsigned start_cyc, unsigned n_cyc) {
 
 // we inline, so don't think is necessary.  code seems to have runtime variance
 // depending on its alignment.  Can experiment if need be.
-// #pragma GCC optimize ("align-functions=16")
+#pragma GCC optimize ("align-functions=16")
 
 static unsigned const compensation = 16;
 
@@ -146,37 +154,39 @@ static unsigned const compensation = 16;
 // write 1 for <ncycles>: since reading the cycle counter itself takes cycles
 // you may need to add a constant to correct for this.
 static inline void write_1(unsigned pin, unsigned ncycles) {
-    // use gpio_set_on_raw
-    unimplemented();
+    unsigned start = cycle_cnt_read();
+    gpio_set_on_raw(pin);
+    delay_ncycles(start, ncycles);
 }
 
 // write 0 for <ncycles>: since reading the cycle counter takes cycles you
 // may need to add a constant to correct for it.
 static inline void write_0(unsigned pin, unsigned ncycles) {
-    // use gpio_set_off_raw
-    unimplemented();
+    unsigned start = cycle_cnt_read();
+    gpio_set_off_raw(pin);
+    delay_ncycles(start, ncycles);
 }
 
 // implement T1H from the datasheet (call write_1 with the right delay)
 static inline void t1h(unsigned pin) {
-    unimplemented();
+    write_1(pin, T1H);
 }
 
 // implement T0H from the datasheet (call write_0 with the right delay)
 static inline void t0h(unsigned pin) {
-    unimplemented();
+    write_1(pin, T0H);
 }
 // implement T1L from the datasheet.
 static inline void t1l(unsigned pin) {
-    unimplemented();
+    write_0(pin, T1L);
 }
 // implement T0L from the datasheed.
 static inline void t0l(unsigned pin) {
-    unimplemented();
+    write_0(pin, T0L);
 }
 // implement RESET from the datasheet.
 static inline void treset(unsigned pin) {
-    unimplemented();
+    write_0(pin, 35000);
 }
 
 /***********************************************************************************
@@ -190,7 +200,13 @@ static inline void pix_flush(unsigned pin) {
 
 // transmit a {0,1} bit to the ws2812b
 static inline void pix_sendbit(unsigned pin, uint8_t b) {
-    unimplemented();
+    if (b) {
+        t1h(pin);
+        t1l(pin);
+    } else {
+        t0h(pin);
+        t0l(pin);
+    }
 }
 
 // use pix_sendbit to send byte <b>
@@ -198,8 +214,10 @@ static inline void pix_sendbit(unsigned pin, uint8_t b) {
 // XXX: it might seem sensible to unroll this code.  however with all the inlining it 
 // becomes huge: unclear if better.  if you decide to inline it, make sure you run
 // tests before and after.  
-static void pix_sendbyte(unsigned pin, uint8_t b) {
-    unimplemented();
+static inline void pix_sendbyte(unsigned pin, uint8_t b) {
+    for(int i = 0; i < 8; i++) {
+        pix_sendbit(pin, (b >> i) & 1);
+    }
 }
 
 // use pix_sendbyte to send bytes [<r> red, <g> green, <b> blue out on pin <pin>.
@@ -208,6 +226,8 @@ static inline void pix_sendpixel(unsigned pin, uint8_t r, uint8_t g, uint8_t b) 
     // delay between the send bytes --- when you optimize it's possible you need 
     // to trim the delays you use.
     // use pix_sendbyte to send <r>, <g> <b>
-    unimplemented();
+    pix_sendbyte(pin, g);
+    pix_sendbyte(pin, r);
+    pix_sendbyte(pin, b);
 }
 #endif

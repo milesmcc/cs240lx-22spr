@@ -20,9 +20,9 @@ void notmain(void) {
     // alter the code to make sure you can:
     //  1. write red and gree
     //  2. write different pixels.
-    for(unsigned i = 0; i < 8; i++) {
+    for(unsigned i = 0; i < 4; i++) {
         output("setting on\n");
-        pix_sendpixel(pix_pin, 0,0,0xff);
+        pix_sendpixel(pix_pin, 0, 0, 0xff);
         pix_flush(pix_pin);
         delay_ms(1000);
 

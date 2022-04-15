@@ -9,14 +9,6 @@
 // the pin used to control the light strip.
 enum { pix_pin = 21 };
 
-// crude routine to write a pixel at a given location.
-void place_cursor(neo_t h, int i) {
-    neopix_write(h,i-2,0xff,0,0);
-    neopix_write(h,i-1,0,0xff,0);
-    neopix_write(h,i,0,0,0xff);
-    neopix_flush(h);
-}
-
 void notmain(void) {
     enable_cache(); 
     gpio_set_output(pix_pin);
@@ -28,13 +20,13 @@ void notmain(void) {
     neo_t h = neopix_init(pix_pin, npixels);
 
     // does 10 increasingly faster loops.
-    for(int j = 0; j < 10; j++) {
+    for(int j = 0; j < 16; j++) {
         output("loop %d\n", j);
         for(int i = 0; i < npixels; i++) {
-            place_cursor(h,i);
-            delay_ms(50-j*2);
+            neopix_write(h, i, 255, 0, 255);
+            neopix_flush(h);
+            delay_ms(100);
         }
-        neopix_fast_clear(h, npixels);
     }
     output("done!\n");
 }

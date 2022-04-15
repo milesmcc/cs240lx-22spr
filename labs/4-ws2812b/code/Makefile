@@ -1,6 +1,6 @@
 # list out the driver program source 
 TEST_SRC = 2-neopix.c 1-blink.c  0-timing-check.c # simple.c
-TEST_SRC = 0-timing-check.c 
+TEST_SRC = 5-sonar.c
 
 OPT_LEVEL = -O3
 
@@ -13,7 +13,7 @@ SRC := neopixel.c
 TTYUSB = 
 
 # set RUN = 1 if you want the code to automatically run after building.
-# RUN = 1
+RUN = 1
 
 DEPS = ./Makefile
 SUPPORT_OBJS := $(SRC:.c=.o)
