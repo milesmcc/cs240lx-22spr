@@ -1,6 +1,6 @@
 # list out the driver program source 
 TEST_SRC = 2-neopix.c 1-blink.c  0-timing-check.c # simple.c
-TEST_SRC = 5-sonar.c
+TEST_SRC = 6-sonar-long.c
 
 OPT_LEVEL = -O3
 
