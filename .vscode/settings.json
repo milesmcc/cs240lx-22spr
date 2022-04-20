@@ -19,6 +19,8 @@
         "string_view": "c",
         "utility": "c",
         "ckalloc.h": "c",
-        "test-interface.h": "c"
+        "test-interface.h": "c",
+        "rpi-constants.h": "c",
+        "kr-malloc.h": "c"
     }
 }

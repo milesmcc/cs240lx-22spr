@@ -22,11 +22,12 @@ char *global_p;
 void * test(void) {
 	extern uint32_t __data_start__, __data_end__;
 
-    printk("global_p=%p datastart=%p, dataend=%p\n",&global_p, &__data_start__, &__data_end__); 
+    printk("global_p=%p datastart=%p, dataend=%p\n", &global_p, &__data_start__, &__data_end__); 
     global_p = ckalloc(4);
     memset(global_p, 0, 4);
     
-    void *p= ckalloc(4);
+    void *p = ckalloc(4);
+    printk("p = %p\n", p);
 
     check_no_leak();
 
@@ -37,8 +38,6 @@ void * test(void) {
 
 void notmain(void) {
     printk("GC test2: checking that local (stack or reg) pointers are detected.\n");
-
-
     // allocated on the stack. <--- might not be using it.
     printk("last alloc =%p\n", test());
 }

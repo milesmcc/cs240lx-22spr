@@ -35,7 +35,9 @@ void *ck_hdr_end(hdr_t *h)
 // is ptr in <h>?
 unsigned ck_ptr_in_block(hdr_t *h, void *ptr)
 {
-    return ((char *)ptr >= (char *)h) && ((char *)ptr <= (char *)(h + h->nbytes_alloc + sizeof h));
+    void *min = ck_hdr_start(h);
+    void *max = ck_hdr_end(h);
+    return (ptr >= min) && (ptr < max);
 }
 
 hdr_t *ck_ptr_is_alloced(void *ptr)
@@ -107,6 +109,7 @@ void *(ckalloc)(unsigned nbytes, src_loc_t l)
     h->alloc_loc = l;
 
     loc_debug(l, "allocating \t%p\n", h + 1);
+
     h->next = alloc_list;
     alloc_list = h;
 

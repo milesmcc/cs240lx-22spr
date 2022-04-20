@@ -46,7 +46,7 @@ int ck_ptr_is_alloced(void *ptr)
         // output("checking if %p is alloced in %p...\n", ptr, h);
         if (ck_ptr_in_block(h, ptr))
         {
-            output("found %p in %p\n", ptr, h);
+            // output("found %p in %p\n", ptr, h);
             return 1;
         }
         else
