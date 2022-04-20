@@ -47,7 +47,7 @@ int ck_ptr_is_alloced(void *ptr);
 
 #define ckalloc(_n) (ckalloc)(_n, SRC_LOC_MK())
 #define ckfree(_ptr) (ckfree)(_ptr, SRC_LOC_MK())
-void *(ckalloc)(uint32_t nbytes, src_loc_t loc);
+void *(ckalloc)(unsigned nbytes, src_loc_t loc);
 void (ckfree)(void *addr, src_loc_t loc);
 
 #endif

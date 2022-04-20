@@ -17,6 +17,7 @@
         "random": "c",
         "vector": "c",
         "string_view": "c",
-        "utility": "c"
+        "utility": "c",
+        "ckalloc.h": "c"
     }
 }

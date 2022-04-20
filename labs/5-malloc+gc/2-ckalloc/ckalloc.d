@@ -1,6 +1,8 @@
 ckalloc.o: ckalloc.c test-interface.h kr-malloc.h \
-  /Users/miles/Source/cs240lx/libunix/libunix.h \
-  /Users/miles/Source/cs240lx/libunix/staff-libunix.h \
-  /Users/miles/Source/cs240lx/libunix/demand.h \
-  /Users/miles/Source/cs240lx/libunix/bit-support.h \
-  /Users/miles/Source/cs240lx/libunix/fast-hash32.h ckalloc.h src-loc.h
+ /Users/miles/Source/cs240lx/libpi/include/rpi.h \
+ /Users/miles/Source/cs240lx/libpi/include/gpio.h \
+ /Users/miles/Source/cs240lx/libpi/include/../libc/libc-extra.h \
+ /Users/miles/Source/cs240lx/libpi/include/../libc/assert.h \
+ /Users/miles/Source/cs240lx/libpi/include/rpi-constants.h \
+ /Users/miles/Source/cs240lx/libpi/include/rpi-extra.h ckalloc.h \
+ src-loc.h
