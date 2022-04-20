@@ -18,6 +18,7 @@
         "vector": "c",
         "string_view": "c",
         "utility": "c",
-        "ckalloc.h": "c"
+        "ckalloc.h": "c",
+        "test-interface.h": "c"
     }
 }

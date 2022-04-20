@@ -3,7 +3,7 @@ TEST_SRC = tests/part2-test2.c tests/part2-test1.c
 
 #   if you want to use our staff-hc-sr04.o,
 #   comment SRC out and uncomment STAFF_OBJS
-SUPPORT_OBJS := ckalloc.o ck-gc.o gc-asm.o
+SUPPORT_OBJS := ckalloc.o kr-malloc.o ck-gc.o gc-asm.o
 
 # define this if you need to give the device for your pi
 TTYUSB = 
