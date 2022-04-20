@@ -6,6 +6,17 @@
         "unordered_map": "c",
         "algorithm": "c",
         "rpi-interrupts.h": "c",
-        "rpi-armtimer.h": "c"
+        "rpi-armtimer.h": "c",
+        "__hash_table": "c",
+        "__split_buffer": "c",
+        "array": "c",
+        "deque": "c",
+        "initializer_list": "c",
+        "list": "c",
+        "queue": "c",
+        "random": "c",
+        "vector": "c",
+        "string_view": "c",
+        "utility": "c"
     }
 }

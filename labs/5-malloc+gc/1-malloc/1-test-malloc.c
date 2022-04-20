@@ -19,13 +19,13 @@ typedef union header { /* block header */
 
 
 void notmain(void) {
-    output("doesnt do anything yet\n");
-    return;
+    // output("doesnt do anything yet\n");
+    // return;
 
     char *p0 = kr_malloc(1);
     unsigned n = sizeof (Header) + sizeof(union align);
 
-    panic("n=%d\n", n);
+    // panic("n=%d\n", n);
     int ntests = 10;
 
     output("malloc(1) = %p\n", p0);
