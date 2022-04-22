@@ -1,6 +1,6 @@
 opened tty port </dev/cu.usbserial-0001>.
 my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests-2.0/part1-test5-no-bug.bin> about to boot
-TRACE:simple_boot: sending 12136 bytes, crc32=f2c5dca2
+TRACE:simple_boot: sending 12244 bytes, crc32=d3450d35
 waiting for a start...
 PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
 bootloader: Done.
@@ -16,6 +16,7 @@ found 0x13f834 in 0x13f780
 tests-2.0/part1-test5-no-bug.c:notmain:9:this allocation's redzones were written to!
 tests-2.0/part1-test5-no-bug.c:notmain:8:this allocation's redzones were written to!
 TRACE:SUCCESS heap checked out
+[Running took 40681549 cycles]
 DONE!!!
 
 Saw done

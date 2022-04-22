@@ -1,6 +1,6 @@
 opened tty port </dev/cu.usbserial-0001>.
 my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests-2.0/part1-test6-bugs.bin> about to boot
-TRACE:simple_boot: sending 12356 bytes, crc32=2b8be391
+TRACE:simple_boot: sending 12464 bytes, crc32=5ccebea5
 waiting for a start...
 PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
 bootloader: Done.
@@ -40,6 +40,7 @@ tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written 
 tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
 tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
 TRACE:SUCCESS found error
+[Running took 134660519 cycles]
 DONE!!!
 
 Saw done

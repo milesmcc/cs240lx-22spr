@@ -1,19 +1,121 @@
-find-ttyusb.c:find_ttyusb:55:FOUND: </dev/ttyUSB0>
-opened tty port </dev/ttyUSB0>.
-pi-install: tty-usb=</dev/ttyUSB0> program=<./tests-2.0/part2-test4-no-leak.bin> about to boot
-HASH: simple_boot: sending 12932 bytes, crc32=1d3496e8
-waiting for a start
-putting code
+opened tty port </dev/cu.usbserial-0001>.
+my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests-2.0/part2-test4-no-leak.bin> about to boot
+TRACE:simple_boot: sending 11632 bytes, crc32=71f796b4
+waiting for a start...
+PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
 bootloader: Done.
-listening on ttyusb=</dev/ttyUSB0>
+listening on ttyusb=</dev/cu.usbserial-0001>
 GC test: checking that a doubly-linked list is handled.
+Requersting more memory (32768)...
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ff70 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13fe20 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13fcd0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13fb80 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13fa30 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f8e0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f790 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f640 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f4f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f3a0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f250 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f100 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13efb0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ee60 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ed10 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ebc0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ea70 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e920 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e7d0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e680 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e530 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e3e0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e290 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e140 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13dff0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13dea0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13dd50 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13dc00 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13dab0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d960 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d810 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d6c0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d570 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d420 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d2d0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d180 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d030 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13cee0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13cd90 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13cc40 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13caf0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c9a0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c850 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c700 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c5b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c460 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c310 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c1c0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c070 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13bf20 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13bdd0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13bc80 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13bb30 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b9e0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b890 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b740 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b5f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b4a0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b350 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b200 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b0b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13af60 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ae10 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13acc0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ab70 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13aa20 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13a8d0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13a780 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13a630 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13a4e0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13a390 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13a240 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13a0f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x139fa0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x139e50 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x139d00 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x139bb0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x139a60 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x139910 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x1397c0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x139670 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x139520 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x1393d0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x139280 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x139130 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x138fe0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x138e90 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x138d40 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x138bf0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x138aa0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x138950 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x138800 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x1386b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x138560 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x138410 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x1382c0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x138170 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x138020 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x137ed0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x137d80 (12 bytes)
 ---------------------------------------------------------
 checking for leaks:
+checking stack: 0x7ffff08 to 0x8000000
 TRACE:	GC:Checked 100 blocks.
 TRACE:		GC:SUCCESS: No leaks found!
 ----------------------------------------------------------
 TRACE:GC: SUCCESS: no leaks!
-TRACE:last alloc = block id=100 [addr=0x1751b0]
+TRACE:last alloc = block id=0 [addr=0x137d80]
+[Running took 467533709 cycles]
 DONE!!!
 
 Saw done

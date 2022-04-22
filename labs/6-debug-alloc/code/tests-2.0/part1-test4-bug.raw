@@ -1,6 +1,6 @@
 opened tty port </dev/cu.usbserial-0001>.
 my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests-2.0/part1-test4-bug.bin> about to boot
-TRACE:simple_boot: sending 12056 bytes, crc32=15918dd7
+TRACE:simple_boot: sending 12164 bytes, crc32=1e497582
 waiting for a start...
 PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
 bootloader: Done.
@@ -15,6 +15,7 @@ TRACE:SUCCESS heap checked out
 tests-2.0/part1-test4-bug.c:notmain:7:this allocation's redzones were written to!
 tests-2.0/part1-test4-bug.c:notmain:9:was used after free!
 TRACE:SUCCESS: detected corruption on block 0 [0x13ff7c]
+[Running took 36747718 cycles]
 DONE!!!
 
 Saw done

@@ -92,11 +92,11 @@ static void mark(uint32_t *p, uint32_t *e)
         {
             uint32_t exp = (uint32_t)(b + 1);
             uint16_t old_mark = b->mark;
-            output("going to mark %p (i @ %p = %p), exp = %p\n", ck_hdr_start(b), i, *i, exp);
+            // output("going to mark %p (i @ %p = %p), exp = %p\n", ck_hdr_start(b), i, *i, exp);
             if (b != 0 && old_mark < 2)
             {
                 b->mark = (*i == exp) ? 2 : 1; // 2 -> no error, 1 -> maybe error
-                output("marking as %d\n", (*i == exp) ? 2 : 1);
+                // output("marking as %d\n", (*i == exp) ? 2 : 1);
                 // output("going to mark %p\n", b);
 
                 if (old_mark == 0)
@@ -106,7 +106,7 @@ static void mark(uint32_t *p, uint32_t *e)
             }
             else
             {
-                output("not marking!\n");
+                // output("not marking!\n");
             }
         }
     }
@@ -159,35 +159,6 @@ static void mark_all(void)
     mark(&__data_start__, &__data_end__);
 }
 
-unsigned int redzone_errors(char *redzone, int nbytes) {
-    int total = 0;
-    for (int i = 0; i < nbytes; i++) {
-        if (redzone[i] != REDZONE_VAL) {
-            total++;
-        }
-    }
-    return total;
-}
-
-int ck_heap_errors() {
-    int errors = 0;
-    for (hdr_t *h = ck_first_hdr(); h; h = ck_next_hdr(h)) {
-        int errors_this_block = 0;
-        errors_this_block += redzone_errors(h->rz1, REDZONE_NBYTES);
-        errors_this_block += redzone_errors(((char*)(h+1)) + h->nbytes_alloc, REDZONE_NBYTES);
-        loc_debug(h->alloc_loc, "this allocation's redzones were written to!\n");
-        if (h->state == FREED) {
-            int e = redzone_errors(((char*)(h+1)), h->nbytes_alloc);
-            errors_this_block += e;
-            if (e) {
-                loc_debug(h->free_loc, "was used after free!\n");
-            }
-        }
-        errors += errors_this_block;
-    }
-    return errors;
-}
-
 // do a sweep, warning about any leaks.
 //
 //
@@ -200,6 +171,10 @@ static unsigned sweep_leak(int warn_no_start_ref_p)
     mark_all();
     for (hdr_t *h = ck_first_hdr(); h; h = ck_next_hdr(h))
     {
+        if (h->state != ALLOCED) {
+            continue;
+        }
+
         nblocks++;
         if (h->mark == 0)
         {
@@ -279,7 +254,7 @@ static unsigned sweep_free(void)
     for (hdr_t *h = ck_first_hdr(); h; h = ck_next_hdr(h))
     {
         nblocks++;
-        if (h->mark == 0)
+        if (h->mark == 0 && h->state == ALLOCED)
         {
             nfreed++;
             nbytes_freed += h->nbytes_alloc;

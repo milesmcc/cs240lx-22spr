@@ -92,11 +92,11 @@ static void mark(uint32_t *p, uint32_t *e)
         {
             uint32_t exp = (uint32_t)(b + 1);
             uint16_t old_mark = b->mark;
-            output("going to mark %p (i @ %p = %p), exp = %p\n", ck_hdr_start(b), i, *i, exp);
+            // output("going to mark %p (i @ %p = %p), exp = %p\n", ck_hdr_start(b), i, *i, exp);
             if (b != 0 && old_mark < 2)
             {
                 b->mark = (*i == exp) ? 2 : 1; // 2 -> no error, 1 -> maybe error
-                output("marking as %d\n", (*i == exp) ? 2 : 1);
+                // output("marking as %d\n", (*i == exp) ? 2 : 1);
                 // output("going to mark %p\n", b);
 
                 if (old_mark == 0)

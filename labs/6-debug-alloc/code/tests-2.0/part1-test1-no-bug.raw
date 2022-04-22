@@ -1,6 +1,6 @@
 opened tty port </dev/cu.usbserial-0001>.
 my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests-2.0/part1-test1-no-bug.bin> about to boot
-TRACE:simple_boot: sending 11980 bytes, crc32=b5412b3d
+TRACE:simple_boot: sending 12088 bytes, crc32=6e3b209a
 waiting for a start...
 PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
 bootloader: Done.
@@ -13,6 +13,7 @@ tests-2.0/part1-test1-no-bug.c:notmain:14:freeing 	0x13ff7c
 found 0x13ff7c in 0x13fec8
 tests-2.0/part1-test1-no-bug.c:notmain:11:this allocation's redzones were written to!
 TRACE:SUCCESS heap checked out
+[Running took 24217244 cycles]
 DONE!!!
 
 Saw done
