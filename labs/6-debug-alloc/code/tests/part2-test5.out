@@ -1,0 +1,50 @@
+TRACE:	GC:Checked 10 blocks.
+TRACE:		GC:SUCCESS: No leaks found!
+TRACE:GC: SUCCESS: no leaks!
+TRACE:ERROR:GC:DEFINITE LEAK of 0x17fdfc
+TRACE:	nbytes=12
+TRACE:	Block allocated at: tests/part2-test5.c:test:16
+TRACE:ERROR:GC:DEFINITE LEAK of 0x17fe34
+TRACE:	nbytes=12
+TRACE:	Block allocated at: tests/part2-test5.c:test:16
+TRACE:ERROR:GC:DEFINITE LEAK of 0x17fe6c
+TRACE:	nbytes=12
+TRACE:	Block allocated at: tests/part2-test5.c:test:16
+TRACE:ERROR:GC:DEFINITE LEAK of 0x17fea4
+TRACE:	nbytes=12
+TRACE:	Block allocated at: tests/part2-test5.c:test:16
+TRACE:ERROR:GC:DEFINITE LEAK of 0x17fedc
+TRACE:	nbytes=12
+TRACE:	Block allocated at: tests/part2-test5.c:test:16
+TRACE:ERROR:GC:DEFINITE LEAK of 0x17ff14
+TRACE:	nbytes=12
+TRACE:	Block allocated at: tests/part2-test5.c:test:16
+TRACE:ERROR:GC:DEFINITE LEAK of 0x17ff4c
+TRACE:	nbytes=12
+TRACE:	Block allocated at: tests/part2-test5.c:test:16
+TRACE:ERROR:GC:DEFINITE LEAK of 0x17ff84
+TRACE:	nbytes=12
+TRACE:	Block allocated at: tests/part2-test5.c:test:16
+TRACE:ERROR:GC:DEFINITE LEAK of 0x17ffbc
+TRACE:	nbytes=12
+TRACE:	Block allocated at: tests/part2-test5.c:test:16
+TRACE:ERROR:GC:DEFINITE LEAK of 0x17fff4
+TRACE:	nbytes=12
+TRACE:	Block allocated at: tests/part2-test5.c:test:16
+TRACE:	GC:Checked 10 blocks.
+TRACE:		GC:ERRORS: 10 errors, 0 maybe_errors
+TRACE:GC: SUCCESS: found 10 leaks!
+TRACE:GC:FREEing ptr=0x17fdfc
+TRACE:GC:FREEing ptr=0x17fe34
+TRACE:GC:FREEing ptr=0x17fe6c
+TRACE:GC:FREEing ptr=0x17fea4
+TRACE:GC:FREEing ptr=0x17fedc
+TRACE:GC:FREEing ptr=0x17ff14
+TRACE:GC:FREEing ptr=0x17ff4c
+TRACE:GC:FREEing ptr=0x17ff84
+TRACE:GC:FREEing ptr=0x17ffbc
+TRACE:GC:FREEing ptr=0x17fff4
+TRACE:	GC:Checked 10 blocks, freed 10, 120 bytes
+TRACE:	GC:Checked 0 blocks.
+TRACE:		GC:SUCCESS: No leaks found!
+TRACE:GC: SUCCESS: no leaks!

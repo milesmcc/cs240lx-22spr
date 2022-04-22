@@ -1,0 +1,37 @@
+opened tty port </dev/cu.usbserial-0001>.
+my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests-2.0/part2-test2-no-leak.bin> about to boot
+TRACE:simple_boot: sending 10808 bytes, crc32=918a8314
+waiting for a start...
+PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
+bootloader: Done.
+listening on ttyusb=</dev/cu.usbserial-0001>
+GC test2: checking that local (stack or reg) pointers are detected.
+global_p=0xae60 datastart=0xaa38, dataend=0xae68
+Requersting more memory (32768)...
+tests-2.0/part2-test2-no-leak.c:test:34:allocating 0x13fff8 (4 bytes)
+tests-2.0/part2-test2-no-leak.c:test:37:allocating 0x13ff40 (4 bytes)
+---------------------------------------------------------
+checking for leaks:
+checking stack: 0x7ffff48 to 0x8000000
+found 0x13ff40 in 0x13fe98
+going to mark 0x13ff40 (i @ 0x7ffff88 = 0x13ff40), exp = 0x13ff40
+marking as 2
+found 0x13ff40 in 0x13fe98
+going to mark 0x13ff40 (i @ 0x7ffff90 = 0x13ff40), exp = 0x13ff40
+not marking!
+found 0x13ff40 in 0x13fe98
+going to mark 0x13ff40 (i @ 0x7ffffb0 = 0x13ff40), exp = 0x13ff40
+not marking!
+found 0x13fff8 in 0x13ff50
+going to mark 0x13fff8 (i @ 0xae60 = 0x13fff8), exp = 0x13fff8
+marking as 2
+TRACE:	GC:Checked 2 blocks.
+TRACE:		GC:SUCCESS: No leaks found!
+----------------------------------------------------------
+TRACE:GC: SUCCESS: no leaks!
+TRACE:last alloc = block_id=0, [0x13ff40]
+DONE!!!
+
+Saw done
+
+bootloader: pi exited.  cleaning up

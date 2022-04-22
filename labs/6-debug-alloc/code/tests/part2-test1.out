@@ -1,0 +1,4 @@
+TRACE:alloc returned 0x17fffc
+TRACE:	GC:Checked 0 blocks.
+TRACE:		GC:SUCCESS: No leaks found!
+TRACE:SUCCESS: no leaks!

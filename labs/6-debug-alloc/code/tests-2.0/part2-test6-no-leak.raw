@@ -1,0 +1,50 @@
+opened tty port </dev/cu.usbserial-0001>.
+my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests-2.0/part2-test6-no-leak.bin> about to boot
+TRACE:simple_boot: sending 10748 bytes, crc32=d6588d28
+waiting for a start...
+PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
+bootloader: Done.
+listening on ttyusb=</dev/cu.usbserial-0001>
+GC test6
+Requersting more memory (32768)...
+tests-2.0/part2-test6-no-leak.c:test1:12:allocating 0x13fff8 (4 bytes)
+TRACE:alloc returned block id=0 [0x13fff8]
+TRACE:test1 returned [0x13fff9]
+---------------------------------------------------------
+checking for leaks:
+checking stack: 0x7ffff70 to 0x8000000
+found 0x13fff9 in 0x13ff50
+going to mark 0x13fff8 (i @ 0x7ffffb0 = 0x13fff9), exp = 0x13fff8
+marking as 1
+found 0x13fff9 in 0x13ff50
+going to mark 0x13fff8 (i @ 0x7ffffb8 = 0x13fff9), exp = 0x13fff8
+marking as 1
+found 0x13fff9 in 0x13ff50
+going to mark 0x13fff8 (i @ 0x7ffffd8 = 0x13fff9), exp = 0x13fff8
+marking as 1
+GC:MAYBE LOST 1 -> 0x13ff50
+TRACE:	GC:Checked 1 blocks.
+TRACE:		GC:ERRORS: 0 errors, 1 maybe_errors
+----------------------------------------------------------
+---------------------------------------------------------
+checking for leaks:
+checking stack: 0x7ffff70 to 0x8000000
+found 0x13fff9 in 0x13ff50
+going to mark 0x13fff8 (i @ 0x7ffffb0 = 0x13fff9), exp = 0x13fff8
+marking as 1
+found 0x13fff9 in 0x13ff50
+going to mark 0x13fff8 (i @ 0x7ffffb8 = 0x13fff9), exp = 0x13fff8
+marking as 1
+found 0x13fff9 in 0x13ff50
+going to mark 0x13fff8 (i @ 0x7ffffd8 = 0x13fff9), exp = 0x13fff8
+marking as 1
+GC:MAYBE LOST 1 -> 0x13ff50
+TRACE:	GC:Checked 1 blocks.
+TRACE:		GC:ERRORS: 0 errors, 1 maybe_errors
+----------------------------------------------------------
+TRACE:SUCCESS: detected a maybe leak!
+DONE!!!
+
+Saw done
+
+bootloader: pi exited.  cleaning up

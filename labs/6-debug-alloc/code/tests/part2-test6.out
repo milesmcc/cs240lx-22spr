@@ -1,0 +1,10 @@
+TRACE:alloc returned 0x17fffc
+TRACE:test1 returned 0x17fffd
+TRACE:	GC:Checked 1 blocks.
+TRACE:		GC:SUCCESS: No leaks found!
+TRACE:ERROR:GC:MAYBE LEAK of 0x17fffc (no pointer to the start)
+TRACE:	nbytes=4
+TRACE:	Block allocated at: tests/part2-test6.c:test1:7
+TRACE:	GC:Checked 1 blocks.
+TRACE:		GC:ERRORS: 0 errors, 1 maybe_errors
+TRACE:SUCCESS: detected a maybe leak!
