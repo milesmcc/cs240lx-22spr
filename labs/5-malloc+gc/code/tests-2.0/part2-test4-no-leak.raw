@@ -1,0 +1,25 @@
+find-ttyusb.c:find_ttyusb:55:FOUND: </dev/ttyUSB0>
+opened tty port </dev/ttyUSB0>.
+pi-install: tty-usb=</dev/ttyUSB0> program=<./tests-2.0/part2-test4-no-leak.bin> about to boot
+HASH: simple_boot: sending 11228 bytes, crc32=daa93b1e
+waiting for a start
+expected initial GET_PROG_INFO, got <fc14a424>: discarding.
+expected initial GET_PROG_INFO, got <22111122>: discarding.
+expected initial GET_PROG_INFO, got <22221111>: discarding.
+expected initial GET_PROG_INFO, got <11222211>: discarding.
+putting code
+bootloader: Done.
+listening on ttyusb=</dev/ttyUSB0>
+GC test: checking that a doubly-linked list is handled.
+---------------------------------------------------------
+checking for leaks:
+TRACE:	GC:Checked 100 blocks.
+TRACE:		GC:SUCCESS: No leaks found!
+----------------------------------------------------------
+TRACE:GC: SUCCESS: no leaks!
+TRACE:last alloc = block id=100 [addr=0x17e730]
+DONE!!!
+
+Saw done
+
+bootloader: pi exited.  cleaning up
