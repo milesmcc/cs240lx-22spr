@@ -99,7 +99,7 @@ void(ckfree)(void *addr, src_loc_t l)
 // interpose on kr_malloc allocations and
 //  1. allocate enough space for a header and fill it in.
 //  2. add the allocated block to  the allocated list.
-void *(ckalloc)(unsigned nbytes, src_loc_t l)
+void *(ckalloc)(uint32_t nbytes, src_loc_t l)
 {
     hdr_t *h = kr_malloc(nbytes + sizeof *h);
     memset(h, 0, sizeof *h);
@@ -108,7 +108,7 @@ void *(ckalloc)(unsigned nbytes, src_loc_t l)
     h->state = ALLOCED;
     h->alloc_loc = l;
 
-    loc_debug(l, "allocating \t%p\n", h + 1);
+    loc_debug(l, "allocating %p (%d bytes)\n", h + 1, nbytes);
 
     h->next = alloc_list;
     alloc_list = h;

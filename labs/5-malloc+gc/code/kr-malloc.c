@@ -29,6 +29,7 @@ static Header *morecore(unsigned nu)
 {
 	if (nu < NALLOC)
 		nu = NALLOC;
+	printk("Requersting more memory (%d)...\n", nu);
 	char *cp = sbrk(nu * sizeof(Header));
 	if (cp == (char *)-1) /* no space at all */
 		return NULL;
@@ -70,7 +71,7 @@ void *kr_malloc(unsigned nbytes)
 		}
 		if (p == freep)
 		{ /* wrapped around free list */
-			if ((p = morecore(nunits)) == NULL)
+			if ((p = morecore(1024*32)) == NULL)
 			{
 				return NULL; /* none left */
 			}

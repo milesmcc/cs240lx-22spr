@@ -1,23 +1,732 @@
-find-ttyusb.c:find_ttyusb:55:FOUND: </dev/ttyUSB0>
-opened tty port </dev/ttyUSB0>.
-pi-install: tty-usb=</dev/ttyUSB0> program=<./tests-2.0/part2-test4-no-leak.bin> about to boot
-HASH: simple_boot: sending 11228 bytes, crc32=daa93b1e
-waiting for a start
-expected initial GET_PROG_INFO, got <fc14a424>: discarding.
-expected initial GET_PROG_INFO, got <22111122>: discarding.
-expected initial GET_PROG_INFO, got <22221111>: discarding.
-expected initial GET_PROG_INFO, got <11222211>: discarding.
-putting code
+opened tty port </dev/cu.usbserial-0001>.
+my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests-2.0/part2-test4-no-leak.bin> about to boot
+TRACE:simple_boot: sending 10672 bytes, crc32=6165987c
+waiting for a start...
+PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
 bootloader: Done.
-listening on ttyusb=</dev/ttyUSB0>
+listening on ttyusb=</dev/cu.usbserial-0001>
 GC test: checking that a doubly-linked list is handled.
+Requersting more memory (32768)...
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13fff0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ff30 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13fe70 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13fdb0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13fcf0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13fc30 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13fb70 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13fab0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f9f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f930 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f870 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f7b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f6f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f630 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f570 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f4b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f3f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f330 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f270 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f1b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f0f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13f030 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ef70 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13eeb0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13edf0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ed30 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ec70 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ebb0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13eaf0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ea30 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e970 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e8b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e7f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e730 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e670 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e5b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e4f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e430 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e370 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e2b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e1f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e130 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13e070 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13dfb0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13def0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13de30 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13dd70 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13dcb0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13dbf0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13db30 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13da70 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d9b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d8f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d830 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d770 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d6b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d5f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d530 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d470 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d3b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d2f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d230 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d170 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13d0b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13cff0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13cf30 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ce70 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13cdb0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ccf0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13cc30 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13cb70 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13cab0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c9f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c930 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c870 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c7b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c6f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c630 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c570 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c4b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c3f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c330 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c270 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c1b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c0f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13c030 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13bf70 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13beb0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13bdf0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13bd30 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13bc70 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13bbb0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13baf0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13ba30 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b970 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b8b0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b7f0 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b730 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b670 (12 bytes)
+tests-2.0/part2-test4-no-leak.c:test:16:allocating 0x13b5b0 (12 bytes)
 ---------------------------------------------------------
 checking for leaks:
+found 0x13b5b0 in 0x13b508
+going to mark 0x13b5b0 (i @ 0x7ffff54 = 0x13b5b0), exp = 0x13b5b0
+marking as 2
+found 0x13b670 in 0x13b5c8
+going to mark 0x13b670 (i @ 0x13b5b4 = 0x13b670), exp = 0x13b670
+marking as 2
+found 0x13b730 in 0x13b688
+going to mark 0x13b730 (i @ 0x13b674 = 0x13b730), exp = 0x13b730
+marking as 2
+found 0x13b7f0 in 0x13b748
+going to mark 0x13b7f0 (i @ 0x13b734 = 0x13b7f0), exp = 0x13b7f0
+marking as 2
+found 0x13b8b0 in 0x13b808
+going to mark 0x13b8b0 (i @ 0x13b7f4 = 0x13b8b0), exp = 0x13b8b0
+marking as 2
+found 0x13b970 in 0x13b8c8
+going to mark 0x13b970 (i @ 0x13b8b4 = 0x13b970), exp = 0x13b970
+marking as 2
+found 0x13ba30 in 0x13b988
+going to mark 0x13ba30 (i @ 0x13b974 = 0x13ba30), exp = 0x13ba30
+marking as 2
+found 0x13baf0 in 0x13ba48
+going to mark 0x13baf0 (i @ 0x13ba34 = 0x13baf0), exp = 0x13baf0
+marking as 2
+found 0x13bbb0 in 0x13bb08
+going to mark 0x13bbb0 (i @ 0x13baf4 = 0x13bbb0), exp = 0x13bbb0
+marking as 2
+found 0x13bc70 in 0x13bbc8
+going to mark 0x13bc70 (i @ 0x13bbb4 = 0x13bc70), exp = 0x13bc70
+marking as 2
+found 0x13bd30 in 0x13bc88
+going to mark 0x13bd30 (i @ 0x13bc74 = 0x13bd30), exp = 0x13bd30
+marking as 2
+found 0x13bdf0 in 0x13bd48
+going to mark 0x13bdf0 (i @ 0x13bd34 = 0x13bdf0), exp = 0x13bdf0
+marking as 2
+found 0x13beb0 in 0x13be08
+going to mark 0x13beb0 (i @ 0x13bdf4 = 0x13beb0), exp = 0x13beb0
+marking as 2
+found 0x13bf70 in 0x13bec8
+going to mark 0x13bf70 (i @ 0x13beb4 = 0x13bf70), exp = 0x13bf70
+marking as 2
+found 0x13c030 in 0x13bf88
+going to mark 0x13c030 (i @ 0x13bf74 = 0x13c030), exp = 0x13c030
+marking as 2
+found 0x13c0f0 in 0x13c048
+going to mark 0x13c0f0 (i @ 0x13c034 = 0x13c0f0), exp = 0x13c0f0
+marking as 2
+found 0x13c1b0 in 0x13c108
+going to mark 0x13c1b0 (i @ 0x13c0f4 = 0x13c1b0), exp = 0x13c1b0
+marking as 2
+found 0x13c270 in 0x13c1c8
+going to mark 0x13c270 (i @ 0x13c1b4 = 0x13c270), exp = 0x13c270
+marking as 2
+found 0x13c330 in 0x13c288
+going to mark 0x13c330 (i @ 0x13c274 = 0x13c330), exp = 0x13c330
+marking as 2
+found 0x13c3f0 in 0x13c348
+going to mark 0x13c3f0 (i @ 0x13c334 = 0x13c3f0), exp = 0x13c3f0
+marking as 2
+found 0x13c4b0 in 0x13c408
+going to mark 0x13c4b0 (i @ 0x13c3f4 = 0x13c4b0), exp = 0x13c4b0
+marking as 2
+found 0x13c570 in 0x13c4c8
+going to mark 0x13c570 (i @ 0x13c4b4 = 0x13c570), exp = 0x13c570
+marking as 2
+found 0x13c630 in 0x13c588
+going to mark 0x13c630 (i @ 0x13c574 = 0x13c630), exp = 0x13c630
+marking as 2
+found 0x13c6f0 in 0x13c648
+going to mark 0x13c6f0 (i @ 0x13c634 = 0x13c6f0), exp = 0x13c6f0
+marking as 2
+found 0x13c7b0 in 0x13c708
+going to mark 0x13c7b0 (i @ 0x13c6f4 = 0x13c7b0), exp = 0x13c7b0
+marking as 2
+found 0x13c870 in 0x13c7c8
+going to mark 0x13c870 (i @ 0x13c7b4 = 0x13c870), exp = 0x13c870
+marking as 2
+found 0x13c930 in 0x13c888
+going to mark 0x13c930 (i @ 0x13c874 = 0x13c930), exp = 0x13c930
+marking as 2
+found 0x13c9f0 in 0x13c948
+going to mark 0x13c9f0 (i @ 0x13c934 = 0x13c9f0), exp = 0x13c9f0
+marking as 2
+found 0x13cab0 in 0x13ca08
+going to mark 0x13cab0 (i @ 0x13c9f4 = 0x13cab0), exp = 0x13cab0
+marking as 2
+found 0x13cb70 in 0x13cac8
+going to mark 0x13cb70 (i @ 0x13cab4 = 0x13cb70), exp = 0x13cb70
+marking as 2
+found 0x13cc30 in 0x13cb88
+going to mark 0x13cc30 (i @ 0x13cb74 = 0x13cc30), exp = 0x13cc30
+marking as 2
+found 0x13ccf0 in 0x13cc48
+going to mark 0x13ccf0 (i @ 0x13cc34 = 0x13ccf0), exp = 0x13ccf0
+marking as 2
+found 0x13cdb0 in 0x13cd08
+going to mark 0x13cdb0 (i @ 0x13ccf4 = 0x13cdb0), exp = 0x13cdb0
+marking as 2
+found 0x13ce70 in 0x13cdc8
+going to mark 0x13ce70 (i @ 0x13cdb4 = 0x13ce70), exp = 0x13ce70
+marking as 2
+found 0x13cf30 in 0x13ce88
+going to mark 0x13cf30 (i @ 0x13ce74 = 0x13cf30), exp = 0x13cf30
+marking as 2
+found 0x13cff0 in 0x13cf48
+going to mark 0x13cff0 (i @ 0x13cf34 = 0x13cff0), exp = 0x13cff0
+marking as 2
+found 0x13d0b0 in 0x13d008
+going to mark 0x13d0b0 (i @ 0x13cff4 = 0x13d0b0), exp = 0x13d0b0
+marking as 2
+found 0x13d170 in 0x13d0c8
+going to mark 0x13d170 (i @ 0x13d0b4 = 0x13d170), exp = 0x13d170
+marking as 2
+found 0x13d230 in 0x13d188
+going to mark 0x13d230 (i @ 0x13d174 = 0x13d230), exp = 0x13d230
+marking as 2
+found 0x13d2f0 in 0x13d248
+going to mark 0x13d2f0 (i @ 0x13d234 = 0x13d2f0), exp = 0x13d2f0
+marking as 2
+found 0x13d3b0 in 0x13d308
+going to mark 0x13d3b0 (i @ 0x13d2f4 = 0x13d3b0), exp = 0x13d3b0
+marking as 2
+found 0x13d470 in 0x13d3c8
+going to mark 0x13d470 (i @ 0x13d3b4 = 0x13d470), exp = 0x13d470
+marking as 2
+found 0x13d530 in 0x13d488
+going to mark 0x13d530 (i @ 0x13d474 = 0x13d530), exp = 0x13d530
+marking as 2
+found 0x13d5f0 in 0x13d548
+going to mark 0x13d5f0 (i @ 0x13d534 = 0x13d5f0), exp = 0x13d5f0
+marking as 2
+found 0x13d6b0 in 0x13d608
+going to mark 0x13d6b0 (i @ 0x13d5f4 = 0x13d6b0), exp = 0x13d6b0
+marking as 2
+found 0x13d770 in 0x13d6c8
+going to mark 0x13d770 (i @ 0x13d6b4 = 0x13d770), exp = 0x13d770
+marking as 2
+found 0x13d830 in 0x13d788
+going to mark 0x13d830 (i @ 0x13d774 = 0x13d830), exp = 0x13d830
+marking as 2
+found 0x13d8f0 in 0x13d848
+going to mark 0x13d8f0 (i @ 0x13d834 = 0x13d8f0), exp = 0x13d8f0
+marking as 2
+found 0x13d9b0 in 0x13d908
+going to mark 0x13d9b0 (i @ 0x13d8f4 = 0x13d9b0), exp = 0x13d9b0
+marking as 2
+found 0x13da70 in 0x13d9c8
+going to mark 0x13da70 (i @ 0x13d9b4 = 0x13da70), exp = 0x13da70
+marking as 2
+found 0x13db30 in 0x13da88
+going to mark 0x13db30 (i @ 0x13da74 = 0x13db30), exp = 0x13db30
+marking as 2
+found 0x13dbf0 in 0x13db48
+going to mark 0x13dbf0 (i @ 0x13db34 = 0x13dbf0), exp = 0x13dbf0
+marking as 2
+found 0x13dcb0 in 0x13dc08
+going to mark 0x13dcb0 (i @ 0x13dbf4 = 0x13dcb0), exp = 0x13dcb0
+marking as 2
+found 0x13dd70 in 0x13dcc8
+going to mark 0x13dd70 (i @ 0x13dcb4 = 0x13dd70), exp = 0x13dd70
+marking as 2
+found 0x13de30 in 0x13dd88
+going to mark 0x13de30 (i @ 0x13dd74 = 0x13de30), exp = 0x13de30
+marking as 2
+found 0x13def0 in 0x13de48
+going to mark 0x13def0 (i @ 0x13de34 = 0x13def0), exp = 0x13def0
+marking as 2
+found 0x13dfb0 in 0x13df08
+going to mark 0x13dfb0 (i @ 0x13def4 = 0x13dfb0), exp = 0x13dfb0
+marking as 2
+found 0x13e070 in 0x13dfc8
+going to mark 0x13e070 (i @ 0x13dfb4 = 0x13e070), exp = 0x13e070
+marking as 2
+found 0x13e130 in 0x13e088
+going to mark 0x13e130 (i @ 0x13e074 = 0x13e130), exp = 0x13e130
+marking as 2
+found 0x13e1f0 in 0x13e148
+going to mark 0x13e1f0 (i @ 0x13e134 = 0x13e1f0), exp = 0x13e1f0
+marking as 2
+found 0x13e2b0 in 0x13e208
+going to mark 0x13e2b0 (i @ 0x13e1f4 = 0x13e2b0), exp = 0x13e2b0
+marking as 2
+found 0x13e370 in 0x13e2c8
+going to mark 0x13e370 (i @ 0x13e2b4 = 0x13e370), exp = 0x13e370
+marking as 2
+found 0x13e430 in 0x13e388
+going to mark 0x13e430 (i @ 0x13e374 = 0x13e430), exp = 0x13e430
+marking as 2
+found 0x13e4f0 in 0x13e448
+going to mark 0x13e4f0 (i @ 0x13e434 = 0x13e4f0), exp = 0x13e4f0
+marking as 2
+found 0x13e5b0 in 0x13e508
+going to mark 0x13e5b0 (i @ 0x13e4f4 = 0x13e5b0), exp = 0x13e5b0
+marking as 2
+found 0x13e670 in 0x13e5c8
+going to mark 0x13e670 (i @ 0x13e5b4 = 0x13e670), exp = 0x13e670
+marking as 2
+found 0x13e730 in 0x13e688
+going to mark 0x13e730 (i @ 0x13e674 = 0x13e730), exp = 0x13e730
+marking as 2
+found 0x13e7f0 in 0x13e748
+going to mark 0x13e7f0 (i @ 0x13e734 = 0x13e7f0), exp = 0x13e7f0
+marking as 2
+found 0x13e8b0 in 0x13e808
+going to mark 0x13e8b0 (i @ 0x13e7f4 = 0x13e8b0), exp = 0x13e8b0
+marking as 2
+found 0x13e970 in 0x13e8c8
+going to mark 0x13e970 (i @ 0x13e8b4 = 0x13e970), exp = 0x13e970
+marking as 2
+found 0x13ea30 in 0x13e988
+going to mark 0x13ea30 (i @ 0x13e974 = 0x13ea30), exp = 0x13ea30
+marking as 2
+found 0x13eaf0 in 0x13ea48
+going to mark 0x13eaf0 (i @ 0x13ea34 = 0x13eaf0), exp = 0x13eaf0
+marking as 2
+found 0x13ebb0 in 0x13eb08
+going to mark 0x13ebb0 (i @ 0x13eaf4 = 0x13ebb0), exp = 0x13ebb0
+marking as 2
+found 0x13ec70 in 0x13ebc8
+going to mark 0x13ec70 (i @ 0x13ebb4 = 0x13ec70), exp = 0x13ec70
+marking as 2
+found 0x13ed30 in 0x13ec88
+going to mark 0x13ed30 (i @ 0x13ec74 = 0x13ed30), exp = 0x13ed30
+marking as 2
+found 0x13edf0 in 0x13ed48
+going to mark 0x13edf0 (i @ 0x13ed34 = 0x13edf0), exp = 0x13edf0
+marking as 2
+found 0x13eeb0 in 0x13ee08
+going to mark 0x13eeb0 (i @ 0x13edf4 = 0x13eeb0), exp = 0x13eeb0
+marking as 2
+found 0x13ef70 in 0x13eec8
+going to mark 0x13ef70 (i @ 0x13eeb4 = 0x13ef70), exp = 0x13ef70
+marking as 2
+found 0x13f030 in 0x13ef88
+going to mark 0x13f030 (i @ 0x13ef74 = 0x13f030), exp = 0x13f030
+marking as 2
+found 0x13f0f0 in 0x13f048
+going to mark 0x13f0f0 (i @ 0x13f034 = 0x13f0f0), exp = 0x13f0f0
+marking as 2
+found 0x13f1b0 in 0x13f108
+going to mark 0x13f1b0 (i @ 0x13f0f4 = 0x13f1b0), exp = 0x13f1b0
+marking as 2
+found 0x13f270 in 0x13f1c8
+going to mark 0x13f270 (i @ 0x13f1b4 = 0x13f270), exp = 0x13f270
+marking as 2
+found 0x13f330 in 0x13f288
+going to mark 0x13f330 (i @ 0x13f274 = 0x13f330), exp = 0x13f330
+marking as 2
+found 0x13f3f0 in 0x13f348
+going to mark 0x13f3f0 (i @ 0x13f334 = 0x13f3f0), exp = 0x13f3f0
+marking as 2
+found 0x13f4b0 in 0x13f408
+going to mark 0x13f4b0 (i @ 0x13f3f4 = 0x13f4b0), exp = 0x13f4b0
+marking as 2
+found 0x13f570 in 0x13f4c8
+going to mark 0x13f570 (i @ 0x13f4b4 = 0x13f570), exp = 0x13f570
+marking as 2
+found 0x13f630 in 0x13f588
+going to mark 0x13f630 (i @ 0x13f574 = 0x13f630), exp = 0x13f630
+marking as 2
+found 0x13f6f0 in 0x13f648
+going to mark 0x13f6f0 (i @ 0x13f634 = 0x13f6f0), exp = 0x13f6f0
+marking as 2
+found 0x13f7b0 in 0x13f708
+going to mark 0x13f7b0 (i @ 0x13f6f4 = 0x13f7b0), exp = 0x13f7b0
+marking as 2
+found 0x13f870 in 0x13f7c8
+going to mark 0x13f870 (i @ 0x13f7b4 = 0x13f870), exp = 0x13f870
+marking as 2
+found 0x13f930 in 0x13f888
+going to mark 0x13f930 (i @ 0x13f874 = 0x13f930), exp = 0x13f930
+marking as 2
+found 0x13f9f0 in 0x13f948
+going to mark 0x13f9f0 (i @ 0x13f934 = 0x13f9f0), exp = 0x13f9f0
+marking as 2
+found 0x13fab0 in 0x13fa08
+going to mark 0x13fab0 (i @ 0x13f9f4 = 0x13fab0), exp = 0x13fab0
+marking as 2
+found 0x13fb70 in 0x13fac8
+going to mark 0x13fb70 (i @ 0x13fab4 = 0x13fb70), exp = 0x13fb70
+marking as 2
+found 0x13fc30 in 0x13fb88
+going to mark 0x13fc30 (i @ 0x13fb74 = 0x13fc30), exp = 0x13fc30
+marking as 2
+found 0x13fcf0 in 0x13fc48
+going to mark 0x13fcf0 (i @ 0x13fc34 = 0x13fcf0), exp = 0x13fcf0
+marking as 2
+found 0x13fdb0 in 0x13fd08
+going to mark 0x13fdb0 (i @ 0x13fcf4 = 0x13fdb0), exp = 0x13fdb0
+marking as 2
+found 0x13fe70 in 0x13fdc8
+going to mark 0x13fe70 (i @ 0x13fdb4 = 0x13fe70), exp = 0x13fe70
+marking as 2
+found 0x13ff30 in 0x13fe88
+going to mark 0x13ff30 (i @ 0x13fe74 = 0x13ff30), exp = 0x13ff30
+marking as 2
+found 0x13fff0 in 0x13ff48
+going to mark 0x13fff0 (i @ 0x13ff34 = 0x13fff0), exp = 0x13fff0
+marking as 2
+found 0x13ff30 in 0x13fe88
+going to mark 0x13ff30 (i @ 0x13fff8 = 0x13ff30), exp = 0x13ff30
+not marking!
+found 0x13fe70 in 0x13fdc8
+going to mark 0x13fe70 (i @ 0x13ff38 = 0x13fe70), exp = 0x13fe70
+not marking!
+found 0x13fdb0 in 0x13fd08
+going to mark 0x13fdb0 (i @ 0x13fe78 = 0x13fdb0), exp = 0x13fdb0
+not marking!
+found 0x13fcf0 in 0x13fc48
+going to mark 0x13fcf0 (i @ 0x13fdb8 = 0x13fcf0), exp = 0x13fcf0
+not marking!
+found 0x13fc30 in 0x13fb88
+going to mark 0x13fc30 (i @ 0x13fcf8 = 0x13fc30), exp = 0x13fc30
+not marking!
+found 0x13fb70 in 0x13fac8
+going to mark 0x13fb70 (i @ 0x13fc38 = 0x13fb70), exp = 0x13fb70
+not marking!
+found 0x13fab0 in 0x13fa08
+going to mark 0x13fab0 (i @ 0x13fb78 = 0x13fab0), exp = 0x13fab0
+not marking!
+found 0x13f9f0 in 0x13f948
+going to mark 0x13f9f0 (i @ 0x13fab8 = 0x13f9f0), exp = 0x13f9f0
+not marking!
+found 0x13f930 in 0x13f888
+going to mark 0x13f930 (i @ 0x13f9f8 = 0x13f930), exp = 0x13f930
+not marking!
+found 0x13f870 in 0x13f7c8
+going to mark 0x13f870 (i @ 0x13f938 = 0x13f870), exp = 0x13f870
+not marking!
+found 0x13f7b0 in 0x13f708
+going to mark 0x13f7b0 (i @ 0x13f878 = 0x13f7b0), exp = 0x13f7b0
+not marking!
+found 0x13f6f0 in 0x13f648
+going to mark 0x13f6f0 (i @ 0x13f7b8 = 0x13f6f0), exp = 0x13f6f0
+not marking!
+found 0x13f630 in 0x13f588
+going to mark 0x13f630 (i @ 0x13f6f8 = 0x13f630), exp = 0x13f630
+not marking!
+found 0x13f570 in 0x13f4c8
+going to mark 0x13f570 (i @ 0x13f638 = 0x13f570), exp = 0x13f570
+not marking!
+found 0x13f4b0 in 0x13f408
+going to mark 0x13f4b0 (i @ 0x13f578 = 0x13f4b0), exp = 0x13f4b0
+not marking!
+found 0x13f3f0 in 0x13f348
+going to mark 0x13f3f0 (i @ 0x13f4b8 = 0x13f3f0), exp = 0x13f3f0
+not marking!
+found 0x13f330 in 0x13f288
+going to mark 0x13f330 (i @ 0x13f3f8 = 0x13f330), exp = 0x13f330
+not marking!
+found 0x13f270 in 0x13f1c8
+going to mark 0x13f270 (i @ 0x13f338 = 0x13f270), exp = 0x13f270
+not marking!
+found 0x13f1b0 in 0x13f108
+going to mark 0x13f1b0 (i @ 0x13f278 = 0x13f1b0), exp = 0x13f1b0
+not marking!
+found 0x13f0f0 in 0x13f048
+going to mark 0x13f0f0 (i @ 0x13f1b8 = 0x13f0f0), exp = 0x13f0f0
+not marking!
+found 0x13f030 in 0x13ef88
+going to mark 0x13f030 (i @ 0x13f0f8 = 0x13f030), exp = 0x13f030
+not marking!
+found 0x13ef70 in 0x13eec8
+going to mark 0x13ef70 (i @ 0x13f038 = 0x13ef70), exp = 0x13ef70
+not marking!
+found 0x13eeb0 in 0x13ee08
+going to mark 0x13eeb0 (i @ 0x13ef78 = 0x13eeb0), exp = 0x13eeb0
+not marking!
+found 0x13edf0 in 0x13ed48
+going to mark 0x13edf0 (i @ 0x13eeb8 = 0x13edf0), exp = 0x13edf0
+not marking!
+found 0x13ed30 in 0x13ec88
+going to mark 0x13ed30 (i @ 0x13edf8 = 0x13ed30), exp = 0x13ed30
+not marking!
+found 0x13ec70 in 0x13ebc8
+going to mark 0x13ec70 (i @ 0x13ed38 = 0x13ec70), exp = 0x13ec70
+not marking!
+found 0x13ebb0 in 0x13eb08
+going to mark 0x13ebb0 (i @ 0x13ec78 = 0x13ebb0), exp = 0x13ebb0
+not marking!
+found 0x13eaf0 in 0x13ea48
+going to mark 0x13eaf0 (i @ 0x13ebb8 = 0x13eaf0), exp = 0x13eaf0
+not marking!
+found 0x13ea30 in 0x13e988
+going to mark 0x13ea30 (i @ 0x13eaf8 = 0x13ea30), exp = 0x13ea30
+not marking!
+found 0x13e970 in 0x13e8c8
+going to mark 0x13e970 (i @ 0x13ea38 = 0x13e970), exp = 0x13e970
+not marking!
+found 0x13e8b0 in 0x13e808
+going to mark 0x13e8b0 (i @ 0x13e978 = 0x13e8b0), exp = 0x13e8b0
+not marking!
+found 0x13e7f0 in 0x13e748
+going to mark 0x13e7f0 (i @ 0x13e8b8 = 0x13e7f0), exp = 0x13e7f0
+not marking!
+found 0x13e730 in 0x13e688
+going to mark 0x13e730 (i @ 0x13e7f8 = 0x13e730), exp = 0x13e730
+not marking!
+found 0x13e670 in 0x13e5c8
+going to mark 0x13e670 (i @ 0x13e738 = 0x13e670), exp = 0x13e670
+not marking!
+found 0x13e5b0 in 0x13e508
+going to mark 0x13e5b0 (i @ 0x13e678 = 0x13e5b0), exp = 0x13e5b0
+not marking!
+found 0x13e4f0 in 0x13e448
+going to mark 0x13e4f0 (i @ 0x13e5b8 = 0x13e4f0), exp = 0x13e4f0
+not marking!
+found 0x13e430 in 0x13e388
+going to mark 0x13e430 (i @ 0x13e4f8 = 0x13e430), exp = 0x13e430
+not marking!
+found 0x13e370 in 0x13e2c8
+going to mark 0x13e370 (i @ 0x13e438 = 0x13e370), exp = 0x13e370
+not marking!
+found 0x13e2b0 in 0x13e208
+going to mark 0x13e2b0 (i @ 0x13e378 = 0x13e2b0), exp = 0x13e2b0
+not marking!
+found 0x13e1f0 in 0x13e148
+going to mark 0x13e1f0 (i @ 0x13e2b8 = 0x13e1f0), exp = 0x13e1f0
+not marking!
+found 0x13e130 in 0x13e088
+going to mark 0x13e130 (i @ 0x13e1f8 = 0x13e130), exp = 0x13e130
+not marking!
+found 0x13e070 in 0x13dfc8
+going to mark 0x13e070 (i @ 0x13e138 = 0x13e070), exp = 0x13e070
+not marking!
+found 0x13dfb0 in 0x13df08
+going to mark 0x13dfb0 (i @ 0x13e078 = 0x13dfb0), exp = 0x13dfb0
+not marking!
+found 0x13def0 in 0x13de48
+going to mark 0x13def0 (i @ 0x13dfb8 = 0x13def0), exp = 0x13def0
+not marking!
+found 0x13de30 in 0x13dd88
+going to mark 0x13de30 (i @ 0x13def8 = 0x13de30), exp = 0x13de30
+not marking!
+found 0x13dd70 in 0x13dcc8
+going to mark 0x13dd70 (i @ 0x13de38 = 0x13dd70), exp = 0x13dd70
+not marking!
+found 0x13dcb0 in 0x13dc08
+going to mark 0x13dcb0 (i @ 0x13dd78 = 0x13dcb0), exp = 0x13dcb0
+not marking!
+found 0x13dbf0 in 0x13db48
+going to mark 0x13dbf0 (i @ 0x13dcb8 = 0x13dbf0), exp = 0x13dbf0
+not marking!
+found 0x13db30 in 0x13da88
+going to mark 0x13db30 (i @ 0x13dbf8 = 0x13db30), exp = 0x13db30
+not marking!
+found 0x13da70 in 0x13d9c8
+going to mark 0x13da70 (i @ 0x13db38 = 0x13da70), exp = 0x13da70
+not marking!
+found 0x13d9b0 in 0x13d908
+going to mark 0x13d9b0 (i @ 0x13da78 = 0x13d9b0), exp = 0x13d9b0
+not marking!
+found 0x13d8f0 in 0x13d848
+going to mark 0x13d8f0 (i @ 0x13d9b8 = 0x13d8f0), exp = 0x13d8f0
+not marking!
+found 0x13d830 in 0x13d788
+going to mark 0x13d830 (i @ 0x13d8f8 = 0x13d830), exp = 0x13d830
+not marking!
+found 0x13d770 in 0x13d6c8
+going to mark 0x13d770 (i @ 0x13d838 = 0x13d770), exp = 0x13d770
+not marking!
+found 0x13d6b0 in 0x13d608
+going to mark 0x13d6b0 (i @ 0x13d778 = 0x13d6b0), exp = 0x13d6b0
+not marking!
+found 0x13d5f0 in 0x13d548
+going to mark 0x13d5f0 (i @ 0x13d6b8 = 0x13d5f0), exp = 0x13d5f0
+not marking!
+found 0x13d530 in 0x13d488
+going to mark 0x13d530 (i @ 0x13d5f8 = 0x13d530), exp = 0x13d530
+not marking!
+found 0x13d470 in 0x13d3c8
+going to mark 0x13d470 (i @ 0x13d538 = 0x13d470), exp = 0x13d470
+not marking!
+found 0x13d3b0 in 0x13d308
+going to mark 0x13d3b0 (i @ 0x13d478 = 0x13d3b0), exp = 0x13d3b0
+not marking!
+found 0x13d2f0 in 0x13d248
+going to mark 0x13d2f0 (i @ 0x13d3b8 = 0x13d2f0), exp = 0x13d2f0
+not marking!
+found 0x13d230 in 0x13d188
+going to mark 0x13d230 (i @ 0x13d2f8 = 0x13d230), exp = 0x13d230
+not marking!
+found 0x13d170 in 0x13d0c8
+going to mark 0x13d170 (i @ 0x13d238 = 0x13d170), exp = 0x13d170
+not marking!
+found 0x13d0b0 in 0x13d008
+going to mark 0x13d0b0 (i @ 0x13d178 = 0x13d0b0), exp = 0x13d0b0
+not marking!
+found 0x13cff0 in 0x13cf48
+going to mark 0x13cff0 (i @ 0x13d0b8 = 0x13cff0), exp = 0x13cff0
+not marking!
+found 0x13cf30 in 0x13ce88
+going to mark 0x13cf30 (i @ 0x13cff8 = 0x13cf30), exp = 0x13cf30
+not marking!
+found 0x13ce70 in 0x13cdc8
+going to mark 0x13ce70 (i @ 0x13cf38 = 0x13ce70), exp = 0x13ce70
+not marking!
+found 0x13cdb0 in 0x13cd08
+going to mark 0x13cdb0 (i @ 0x13ce78 = 0x13cdb0), exp = 0x13cdb0
+not marking!
+found 0x13ccf0 in 0x13cc48
+going to mark 0x13ccf0 (i @ 0x13cdb8 = 0x13ccf0), exp = 0x13ccf0
+not marking!
+found 0x13cc30 in 0x13cb88
+going to mark 0x13cc30 (i @ 0x13ccf8 = 0x13cc30), exp = 0x13cc30
+not marking!
+found 0x13cb70 in 0x13cac8
+going to mark 0x13cb70 (i @ 0x13cc38 = 0x13cb70), exp = 0x13cb70
+not marking!
+found 0x13cab0 in 0x13ca08
+going to mark 0x13cab0 (i @ 0x13cb78 = 0x13cab0), exp = 0x13cab0
+not marking!
+found 0x13c9f0 in 0x13c948
+going to mark 0x13c9f0 (i @ 0x13cab8 = 0x13c9f0), exp = 0x13c9f0
+not marking!
+found 0x13c930 in 0x13c888
+going to mark 0x13c930 (i @ 0x13c9f8 = 0x13c930), exp = 0x13c930
+not marking!
+found 0x13c870 in 0x13c7c8
+going to mark 0x13c870 (i @ 0x13c938 = 0x13c870), exp = 0x13c870
+not marking!
+found 0x13c7b0 in 0x13c708
+going to mark 0x13c7b0 (i @ 0x13c878 = 0x13c7b0), exp = 0x13c7b0
+not marking!
+found 0x13c6f0 in 0x13c648
+going to mark 0x13c6f0 (i @ 0x13c7b8 = 0x13c6f0), exp = 0x13c6f0
+not marking!
+found 0x13c630 in 0x13c588
+going to mark 0x13c630 (i @ 0x13c6f8 = 0x13c630), exp = 0x13c630
+not marking!
+found 0x13c570 in 0x13c4c8
+going to mark 0x13c570 (i @ 0x13c638 = 0x13c570), exp = 0x13c570
+not marking!
+found 0x13c4b0 in 0x13c408
+going to mark 0x13c4b0 (i @ 0x13c578 = 0x13c4b0), exp = 0x13c4b0
+not marking!
+found 0x13c3f0 in 0x13c348
+going to mark 0x13c3f0 (i @ 0x13c4b8 = 0x13c3f0), exp = 0x13c3f0
+not marking!
+found 0x13c330 in 0x13c288
+going to mark 0x13c330 (i @ 0x13c3f8 = 0x13c330), exp = 0x13c330
+not marking!
+found 0x13c270 in 0x13c1c8
+going to mark 0x13c270 (i @ 0x13c338 = 0x13c270), exp = 0x13c270
+not marking!
+found 0x13c1b0 in 0x13c108
+going to mark 0x13c1b0 (i @ 0x13c278 = 0x13c1b0), exp = 0x13c1b0
+not marking!
+found 0x13c0f0 in 0x13c048
+going to mark 0x13c0f0 (i @ 0x13c1b8 = 0x13c0f0), exp = 0x13c0f0
+not marking!
+found 0x13c030 in 0x13bf88
+going to mark 0x13c030 (i @ 0x13c0f8 = 0x13c030), exp = 0x13c030
+not marking!
+found 0x13bf70 in 0x13bec8
+going to mark 0x13bf70 (i @ 0x13c038 = 0x13bf70), exp = 0x13bf70
+not marking!
+found 0x13beb0 in 0x13be08
+going to mark 0x13beb0 (i @ 0x13bf78 = 0x13beb0), exp = 0x13beb0
+not marking!
+found 0x13bdf0 in 0x13bd48
+going to mark 0x13bdf0 (i @ 0x13beb8 = 0x13bdf0), exp = 0x13bdf0
+not marking!
+found 0x13bd30 in 0x13bc88
+going to mark 0x13bd30 (i @ 0x13bdf8 = 0x13bd30), exp = 0x13bd30
+not marking!
+found 0x13bc70 in 0x13bbc8
+going to mark 0x13bc70 (i @ 0x13bd38 = 0x13bc70), exp = 0x13bc70
+not marking!
+found 0x13bbb0 in 0x13bb08
+going to mark 0x13bbb0 (i @ 0x13bc78 = 0x13bbb0), exp = 0x13bbb0
+not marking!
+found 0x13baf0 in 0x13ba48
+going to mark 0x13baf0 (i @ 0x13bbb8 = 0x13baf0), exp = 0x13baf0
+not marking!
+found 0x13ba30 in 0x13b988
+going to mark 0x13ba30 (i @ 0x13baf8 = 0x13ba30), exp = 0x13ba30
+not marking!
+found 0x13b970 in 0x13b8c8
+going to mark 0x13b970 (i @ 0x13ba38 = 0x13b970), exp = 0x13b970
+not marking!
+found 0x13b8b0 in 0x13b808
+going to mark 0x13b8b0 (i @ 0x13b978 = 0x13b8b0), exp = 0x13b8b0
+not marking!
+found 0x13b7f0 in 0x13b748
+going to mark 0x13b7f0 (i @ 0x13b8b8 = 0x13b7f0), exp = 0x13b7f0
+not marking!
+found 0x13b730 in 0x13b688
+going to mark 0x13b730 (i @ 0x13b7f8 = 0x13b730), exp = 0x13b730
+not marking!
+found 0x13b670 in 0x13b5c8
+going to mark 0x13b670 (i @ 0x13b738 = 0x13b670), exp = 0x13b670
+not marking!
+found 0x13b5b0 in 0x13b508
+going to mark 0x13b5b0 (i @ 0x13b678 = 0x13b5b0), exp = 0x13b5b0
+not marking!
+checking stack: 0x7ffff40 to 0x8000000
+found 0x13b5b0 in 0x13b508
+going to mark 0x13b5b0 (i @ 0x7ffff54 = 0x13b5b0), exp = 0x13b5b0
+not marking!
+found 0x13b5b0 in 0x13b508
+going to mark 0x13b5b0 (i @ 0x7ffff80 = 0x13b5b0), exp = 0x13b5b0
+not marking!
+found 0x13b5b0 in 0x13b508
+going to mark 0x13b5b0 (i @ 0x7ffff88 = 0x13b5b0), exp = 0x13b5b0
+not marking!
+found 0x13b5b0 in 0x13b508
+going to mark 0x13b5b0 (i @ 0x7ffff8c = 0x13b5b0), exp = 0x13b5b0
+not marking!
+found 0x13b5b0 in 0x13b508
+going to mark 0x13b5b0 (i @ 0x7ffffa8 = 0x13b5b0), exp = 0x13b5b0
+not marking!
 TRACE:	GC:Checked 100 blocks.
 TRACE:		GC:SUCCESS: No leaks found!
 ----------------------------------------------------------
 TRACE:GC: SUCCESS: no leaks!
-TRACE:last alloc = block id=100 [addr=0x17e730]
+TRACE:last alloc = block id=0 [addr=0x13b5b0]
 DONE!!!
 
 Saw done

@@ -1,5 +1,5 @@
 # list out the driver program source 
-TEST_SRC = tests/part2-test1.c tests/part2-test2.c tests/part2-test3.c tests/part2-test4.c tests/part2-test5.c tests/part2-test6.c
+TEST_SRC = tests-2.0/part2-test6-no-leak.c tests-2.0/part2-test1-no-leak.c tests-2.0/part2-test2-no-leak.c tests-2.0/part2-test4-no-leak.c tests-2.0/part2-test5-gc.c
 
 #   if you want to use our staff-hc-sr04.o,
 #   comment SRC out and uncomment STAFF_OBJS
@@ -13,3 +13,20 @@ RUN = 1
 
 DEPS = ./Makefile
 include $(CS240LX_2022_PATH)/libpi/mk/Makefile.template
+
+checkopt:
+	@echo "going to check opt level: -O:"
+	@make -s clean && make -s "OPT_LEVEL=-O" RUN=0
+	@make check
+	
+	@echo "going to check opt level: -O2:"
+	@make -s clean && make -s "OPT_LEVEL=-O2" RUN=0
+	@make check
+
+	@echo "going to check opt level: -O3:"
+	@make -s clean && make -s "OPT_LEVEL=-O3" RUN=0
+	@make check
+
+	@echo "going to check opt level: -Ofast:"
+	@make -s clean && make -s "OPT_LEVEL=-Ofast" RUN=0
+	@make check

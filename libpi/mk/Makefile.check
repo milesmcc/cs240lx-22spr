@@ -12,7 +12,7 @@
 # We seperate this out to hopefully clean up the various makefiles: they worry
 # about making binaries, this one worries about testing.
 
-BOOTLOADER ?= pi-install  
+BOOTLOADER ?= my-install  
 
 # shut up "ntering/leaving"
 MAKEFLAGS += --no-print-directory

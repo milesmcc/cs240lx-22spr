@@ -1,15 +1,19 @@
-find-ttyusb.c:find_ttyusb:55:FOUND: </dev/ttyUSB0>
-opened tty port </dev/ttyUSB0>.
-pi-install: tty-usb=</dev/ttyUSB0> program=<./tests-2.0/part2-test1-no-leak.bin> about to boot
-HASH: simple_boot: sending 11220 bytes, crc32=e983201d
-waiting for a start
-putting code
+opened tty port </dev/cu.usbserial-0001>.
+my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests-2.0/part2-test1-no-leak.bin> about to boot
+TRACE:simple_boot: sending 10616 bytes, crc32=2938fec9
+waiting for a start...
+PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
 bootloader: Done.
-listening on ttyusb=</dev/ttyUSB0>
+listening on ttyusb=</dev/cu.usbserial-0001>
 GC test1
-TRACE:alloc returned block id=1 [addr=0x17fff8]
+Requersting more memory (32768)...
+tests-2.0/part2-test1-no-leak.c:test1:9:allocating 0x13fff8 (4 bytes)
+TRACE:alloc returned block id=0 [addr=0x13fff8]
+tests-2.0/part2-test1-no-leak.c:test1:12:freeing 	0x13fff8
+found 0x13fff8 in 0x13ff50
 ---------------------------------------------------------
 checking for leaks:
+checking stack: 0x7ffff78 to 0x8000000
 TRACE:	GC:Checked 0 blocks.
 TRACE:		GC:SUCCESS: No leaks found!
 ----------------------------------------------------------
