@@ -8,7 +8,6 @@
 static hdr_t *alloc_list;
 
 #define SHADOW_OFFSET 0x10000000
-#define HEADER_CANARY 0xDEADBEEF
 extern char __heap_start__;
 static char *max_heap = 0;
 
@@ -164,7 +163,6 @@ void *(ckalloc)(uint32_t nbytes, src_loc_t l)
     h->nbytes_alloc = nbytes;
     h->state = ALLOCED;
     h->alloc_loc = l;
-    h->canary = HEADER_CANARY;
 
     loc_debug(l, "allocating %p (%d bytes)\n", h + 1, nbytes);
 
