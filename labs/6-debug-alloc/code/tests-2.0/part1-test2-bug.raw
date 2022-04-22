@@ -1,6 +1,6 @@
 opened tty port </dev/cu.usbserial-0001>.
 my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests-2.0/part1-test2-bug.bin> about to boot
-TRACE:simple_boot: sending 10988 bytes, crc32=3fab2e85
+TRACE:simple_boot: sending 11888 bytes, crc32=ad9b0491
 waiting for a start...
 PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
 bootloader: Done.
@@ -9,6 +9,8 @@ test2: memory overflow at offset 4
 Requersting more memory (32768)...
 tests-2.0/part1-test2-bug.c:notmain:7:allocating 0x13ff7c (4 bytes)
 tests-2.0/part1-test2-bug.c:notmain:10:freeing 	0x13ff7c
+#0 0x8268 (ckfree)
+#1 0x8044 (notmain)
 LOC_PANIC: tests-2.0/part1-test2-bug.c:notmain:10:redzone #2 was corrupted!
 DONE!!!
 

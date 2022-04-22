@@ -1,6 +1,6 @@
 opened tty port </dev/cu.usbserial-0001>.
 my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests-2.0/part1-test5-no-bug.bin> about to boot
-TRACE:simple_boot: sending 11236 bytes, crc32=8c0864bb
+TRACE:simple_boot: sending 12136 bytes, crc32=f2c5dca2
 waiting for a start...
 PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
 bootloader: Done.
