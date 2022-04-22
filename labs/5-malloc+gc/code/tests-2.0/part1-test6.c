@@ -6,9 +6,9 @@ void notmain(void) {
     printk("test4: use after free\n");
 
     // start heap allocating after the first mb.   give it 1mb to use.
-    kmalloc_init_set_start(0x100000);
     unsigned n = 1024*1024;
-    ck_init(kmalloc(n),n);
+    kmalloc_init_set_start(0x100000, n);
+    // ck_init(kmalloc(n),n);
 
 
     enum { N = 6 };

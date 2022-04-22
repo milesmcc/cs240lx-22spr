@@ -1,21 +1,44 @@
-find-ttyusb.c:find_ttyusb:55:FOUND: </dev/ttyUSB0>
-opened tty port </dev/ttyUSB0>.
-pi-install: tty-usb=</dev/ttyUSB0> program=<./tests-2.0/part1-test6-bugs.bin> about to boot
-HASH: simple_boot: sending 13228 bytes, crc32=e3fcefe9
-waiting for a start
-putting code
+opened tty port </dev/cu.usbserial-0001>.
+my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests-2.0/part1-test6-bugs.bin> about to boot
+TRACE:simple_boot: sending 11432 bytes, crc32=88f6fed
+waiting for a start...
+PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
 bootloader: Done.
-listening on ttyusb=</dev/ttyUSB0>
+listening on ttyusb=</dev/cu.usbserial-0001>
 test4: use after free
-TRACE:going to check heap
-TRACE:SUCCESS: checked 6 blocks, detected no errors
+Requersting more memory (32768)...
+tests-2.0/part1-test6-bugs.c:notmain:14:allocating 0x13fc44 (824 bytes)
+tests-2.0/part1-test6-bugs.c:notmain:14:allocating 0x13f834 (718 bytes)
+tests-2.0/part1-test6-bugs.c:notmain:14:allocating 0x13f444 (691 bytes)
+tests-2.0/part1-test6-bugs.c:notmain:14:allocating 0x13f05c (684 bytes)
+tests-2.0/part1-test6-bugs.c:notmain:14:allocating 0x13ee74 (171 bytes)
+tests-2.0/part1-test6-bugs.c:notmain:14:allocating 0x13eb0c (554 bytes)
+tests-2.0/part1-test6-bugs.c:notmain:18:freeing 	0x13fc44
+found 0x13fc44 in 0x13fb90
+tests-2.0/part1-test6-bugs.c:notmain:18:freeing 	0x13f834
+found 0x13f834 in 0x13f780
+tests-2.0/part1-test6-bugs.c:notmain:18:freeing 	0x13f444
+found 0x13f444 in 0x13f390
+tests-2.0/part1-test6-bugs.c:notmain:18:freeing 	0x13f05c
+found 0x13f05c in 0x13efa8
+tests-2.0/part1-test6-bugs.c:notmain:18:freeing 	0x13ee74
+found 0x13ee74 in 0x13edc0
+tests-2.0/part1-test6-bugs.c:notmain:18:freeing 	0x13eb0c
+found 0x13eb0c in 0x13ea58
+tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
+tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
+tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
+tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
+tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
+tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
 TRACE:SUCCESS heap checked out
-TRACE:corrupting 0x17ec20 at offset 173 (0x17eccd)
-TRACE:going to check heap
-TRACE:ERROR:block 5 [0x17ec20] corrupted at offset 173
-TRACE:	logical block id=5, [addr=0x17ec20] nbytes=171
-TRACE:	Block allocated at: tests-2.0/part1-test6-bugs.c:notmain:14
-TRACE:checked 6 blocks, detected 1 errors
+TRACE:corrupting 0x13ee74 at offset 173 (0x13ef21)
+tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
+tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
+tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
+tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
+tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
+tests-2.0/part1-test6-bugs.c:notmain:14:this allocation's redzones were written to!
 TRACE:SUCCESS found error
 DONE!!!
 

@@ -1,19 +1,18 @@
-find-ttyusb.c:find_ttyusb:55:FOUND: </dev/ttyUSB0>
-opened tty port </dev/ttyUSB0>.
-pi-install: tty-usb=</dev/ttyUSB0> program=<./tests-2.0/part1-test3-bug.bin> about to boot
-HASH: simple_boot: sending 12904 bytes, crc32=d61d35ce
-waiting for a start
-putting code
+opened tty port </dev/cu.usbserial-0001>.
+my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests-2.0/part1-test3-bug.bin> about to boot
+TRACE:simple_boot: sending 11052 bytes, crc32=c2f9319a
+waiting for a start...
+PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
 bootloader: Done.
-listening on ttyusb=</dev/ttyUSB0>
+listening on ttyusb=</dev/cu.usbserial-0001>
 test3: use after free
-TRACE:going to check heap
-TRACE:ERROR:block 1 [0x17fef8] corrupted at offset 0
-TRACE:	logical block id=1, [addr=0x17fef8] nbytes=4
-TRACE:	Block allocated at: tests-2.0/part1-test3-bug.c:notmain:9
-TRACE:	Wrote block after free!
-TRACE:checked 1 blocks, detected 1 errors
-TRACE:SUCCESS: detected corruption in 1 [0x17fef8]
+Requersting more memory (32768)...
+tests-2.0/part1-test3-bug.c:notmain:9:allocating 0x13ff7c (4 bytes)
+tests-2.0/part1-test3-bug.c:notmain:11:freeing 	0x13ff7c
+found 0x13ff7c in 0x13fec8
+tests-2.0/part1-test3-bug.c:notmain:9:this allocation's redzones were written to!
+tests-2.0/part1-test3-bug.c:notmain:11:was used after free!
+TRACE:SUCCESS: detected corruption in 0 [0x13ff7c]
 DONE!!!
 
 Saw done

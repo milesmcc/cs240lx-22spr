@@ -159,6 +159,35 @@ static void mark_all(void)
     mark(&__data_start__, &__data_end__);
 }
 
+unsigned int redzone_errors(char *redzone, int nbytes) {
+    int total = 0;
+    for (int i = 0; i < nbytes; i++) {
+        if (redzone[i] != REDZONE_VAL) {
+            total++;
+        }
+    }
+    return total;
+}
+
+int ck_heap_errors() {
+    int errors = 0;
+    for (hdr_t *h = ck_first_hdr(); h; h = ck_next_hdr(h)) {
+        int errors_this_block = 0;
+        errors_this_block += redzone_errors(h->rz1, REDZONE_NBYTES);
+        errors_this_block += redzone_errors(((char*)(h+1)) + h->nbytes_alloc, REDZONE_NBYTES);
+        loc_debug(h->alloc_loc, "this allocation's redzones were written to!\n");
+        if (h->state == FREED) {
+            int e = redzone_errors(((char*)(h+1)), h->nbytes_alloc);
+            errors_this_block += e;
+            if (e) {
+                loc_debug(h->free_loc, "was used after free!\n");
+            }
+        }
+        errors += errors_this_block;
+    }
+    return errors;
+}
+
 // do a sweep, warning about any leaks.
 //
 //

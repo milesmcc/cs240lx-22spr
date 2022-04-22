@@ -84,6 +84,7 @@ void(ckfree)(void *addr, src_loc_t l)
 {
     hdr_t *h = (void *)addr;
     h -= 1;
+    h->free_loc = l;
 
     loc_debug(l, "freeing \t%p\n", addr);
     if (h->state != ALLOCED)
@@ -91,10 +92,10 @@ void(ckfree)(void *addr, src_loc_t l)
 
     for(int i = 0; i < REDZONE_NBYTES; i++) {
         if (h->rz1[i] != REDZONE_VAL) {
-            loc_panic(l, "redzone1 was corrupted! found %x, expected %x\n", h->rz1[i], REDZONE_VAL);
+            loc_panic(l, "redzone #1 was corrupted!\n");
         }
         if (*((char *)(h + 1) + h->nbytes_alloc + i) != REDZONE_VAL) {
-            loc_panic(l, "redzone2 was corrupted!\n");
+            loc_panic(l, "redzone #2 was corrupted!\n");
         }
     }
 
@@ -104,10 +105,10 @@ void(ckfree)(void *addr, src_loc_t l)
     }
 
     h->state = FREED;
-    // TODO: set src loc
+    h->free_loc = l;
     assert(ck_ptr_is_alloced(addr));
 
-    list_remove(&alloc_list, h);
+    // list_remove(&alloc_list, h);
     // kr_free(h); // We don't want to reuse!
 }
 
