@@ -15,6 +15,7 @@ src_loc_t src_loc_mk(const char *file, const char *func, unsigned lineno) {
 #define SRC_LOC_MK() src_loc_mk(__FILE__, __FUNCTION__, __LINE__)
 
 #define loc_panic(l, args...) do {                              \
+    backtrace(); \
     output("LOC_PANIC: %s:%s:%d:", (l).file, (l).func, (l).lineno);        \
     output(args);                                               \
     clean_reboot();                                                   \

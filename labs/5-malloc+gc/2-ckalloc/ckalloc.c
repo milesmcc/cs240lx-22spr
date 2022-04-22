@@ -87,8 +87,9 @@ void(ckfree)(void *addr, src_loc_t l)
     h -= 1;
 
     loc_debug(l, "freeing \t%p\n", addr);
-    if (h->state != ALLOCED)
+    if (h->state != ALLOCED) {
         loc_panic(l, "freeing unallocated memory: state=%d\n", h->state);
+    }
 
     h->state = FREED;
     assert(ck_ptr_is_alloced(addr));
