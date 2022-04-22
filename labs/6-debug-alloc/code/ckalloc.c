@@ -10,7 +10,7 @@ static hdr_t *alloc_list;
 #define SHADOW_OFFSET 0x10000000
 #define HEADER_CANARY 0xDEADBEEF
 extern char __heap_start__;
-static unsigned *shadow_start = (unsigned *)&__heap_start__ + SHADOW_OFFSET;
+static char *max_heap = 0;
 
 // returns pointer to the first header block.
 hdr_t *ck_first_hdr(void)
@@ -47,9 +47,9 @@ unsigned ck_ptr_in_block(hdr_t *h, void *ptr)
 
 hdr_t *ck_ptr_is_alloced(void *ptr)
 {
-    #if 0
+    #if 1
     hdr_t **out = shadow_location(ptr);
-    if (out && (*out)->canary == HEADER_CANARY && (*out)->state != FREED && ck_ptr_in_block(*out, ptr))
+    if (out && (*out)->state != FREED && ck_ptr_in_block(*out, ptr))
     {
         return *out;
     }
@@ -129,7 +129,7 @@ void(ckfree)(void *addr, src_loc_t l)
 
 hdr_t **shadow_location(char *original)
 {
-    if (original < &__heap_start__ || original >= (char *)shadow_start)
+    if (original < &__heap_start__ || original >= max_heap)
     {
         return 0;
     }
@@ -141,7 +141,15 @@ hdr_t **shadow_location(char *original)
 //  2. add the allocated block to  the allocated list.
 void *(ckalloc)(uint32_t nbytes, src_loc_t l)
 {
-    hdr_t *h = kr_malloc(nbytes + sizeof *h + REDZONE_NBYTES);
+    unsigned size = nbytes + sizeof(hdr_t) + REDZONE_NBYTES;
+    hdr_t *h = kr_malloc(size);
+
+    char *end = ((char *)h) + size + 10000;
+    if (end > max_heap) {
+        char *start = max_heap < &__heap_start__ ? &__heap_start__ : max_heap;
+        memset(start + SHADOW_OFFSET, 0, (unsigned) (end - start));
+        max_heap = end;
+    }
 
     // Write header zeros
     memset(h, 0, sizeof *h);

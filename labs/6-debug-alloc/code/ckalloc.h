@@ -12,7 +12,6 @@ enum { REDZONE_NBYTES = 128, REDZONE_VAL = 0xfe };
 // pull the remainder into the second redzone.
 typedef struct ck_hdr {
     struct ck_hdr *next;
-    uint32_t canary;
     uint32_t nbytes_alloc;  // how much the user requested to allocate.
     uint32_t state;          // state of the block: { ALLOCED, FREED }
 
