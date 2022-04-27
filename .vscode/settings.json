@@ -22,6 +22,7 @@
         "test-interface.h": "c",
         "rpi-constants.h": "c",
         "kr-malloc.h": "c",
-        "pinned-vm-asm.h": "c"
+        "pinned-vm-asm.h": "c",
+        "variant": "c"
     }
 }

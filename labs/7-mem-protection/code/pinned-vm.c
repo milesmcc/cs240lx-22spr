@@ -28,15 +28,19 @@ int tlb_contains_va(uint32_t *result, uint32_t va) {
     // 3-79
     assert(bits_get(va, 0,2) == 0);
 
-    *result = va;
-    return 1;
-
-    uint32_t res = xlate_pa_get();
-
-    const uint32_t MASK = 0b1111111111;
-    *result = (res & ~MASK);
-
-    return !(res & 1); // 3-81
+    for (int i = 0; i < 8; i++) {
+        lockdown_index_set(i);
+        uint32_t base = lockdown_va_get();
+        if (!(lockdown_pa_get() & 1)) {
+            continue;
+        }
+        const uint32_t MASK = 0xFFF00000;
+        if ((base & MASK) == (va & MASK)) {
+            *result = (base & MASK) | (va & ~MASK);
+            return 1;
+        }
+    }
+    return 0;
 }
 
 // map <va>-><pa> at TLB index <idx> with attributes <e>

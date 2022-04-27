@@ -1,6 +1,6 @@
 #TEST_SRC := $(wildcard ./tests-2.0/part1-test[0-9]*.c)
 
-TEST_SRC = tests/0-test3.c
+TEST_SRC = tests/1-test-tlb.c
 
 # make a local copy of cstart so you can modify it.
 SUPPORT_OBJS = cstart.o  pinned-vm.o
