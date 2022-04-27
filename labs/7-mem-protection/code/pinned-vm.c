@@ -15,6 +15,12 @@
 // definition)
 // arm1176.pdf: 3-149
 
+cp_asm(lockdown_index, p15, 5, c15, c4, 2)
+cp_asm(lockdown_va, p15, 5, c15, c5, 2)
+cp_asm(lockdown_pa, p15, 5, c15, c6, 2)
+cp_asm(lockdown_attr, p15, 5, c15, c7, 2)
+cp_asm(xlate_pa, p15, 0, c7, c4, 0)
+
 // do a manual translation in tlb:
 //   1. store result in <result>
 //   2. return 1 if entry exists, 0 otherwise.
@@ -22,7 +28,15 @@ int tlb_contains_va(uint32_t *result, uint32_t va) {
     // 3-79
     assert(bits_get(va, 0,2) == 0);
 
-    unimplemented();
+    *result = va;
+    return 1;
+
+    uint32_t res = xlate_pa_get();
+
+    const uint32_t MASK = 0b1111111111;
+    *result = (res & ~MASK);
+
+    return !(res & 1); // 3-81
 }
 
 // map <va>-><pa> at TLB index <idx> with attributes <e>
@@ -42,12 +56,19 @@ void pin_mmu_sec(unsigned idx,
 
     debug("about to map %x->%x\n", va,pa);
 
-
     // these will hold the values you assign for the tlb entries.
     uint32_t x, va_ent, pa_ent, attr;
 
-    // put your code here.
-    unimplemented();
+    lockdown_index_set(idx);
+    
+    pa_ent = pa | (0b1 << 9) | (e.pagesize << 6) | (e.AP_perm << 1) | 1;
+    lockdown_pa_set(pa_ent);
+
+    va_ent = va | (e.asid) | (e.G << 9);
+    lockdown_va_set(va_ent);
+
+    attr = (e.dom << 7);
+    lockdown_attr_set(attr);
 
     if((x = lockdown_va_get()) != va_ent)
         panic("lockdown va: expected %x, have %x\n", va_ent,x);

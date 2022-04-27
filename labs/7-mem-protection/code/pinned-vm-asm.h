@@ -47,6 +47,6 @@ void xlate_kern_wr_set(uint32_t x);
 uint32_t xlate_pa_get(void);
 
 // clean up the return type
-#undef ASM_RET_TYPE
+// #undef ASM_RET_TYPE
 
 #endif

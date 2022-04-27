@@ -11,7 +11,8 @@ STAFF_OBJS = staff-mmu-asm.o staff-mmu.o   staff-pinned-vm.o staff-mmu-except.o
 # staff-pinned-vm.o
 
 # define this if you need to give the device for your pi
-TTYUSB = 
+TTYUSB = /dev/cu.usbserial-0001
+BOOTLOADER = pi-install
 
 # set RUN = 1 if you want the code to automatically run after building.
 RUN = 1
