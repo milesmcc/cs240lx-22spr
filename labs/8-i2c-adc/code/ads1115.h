@@ -9,6 +9,8 @@ uint16_t ads1115_read16(uint8_t dev_addr, uint8_t reg);
 
 uint8_t ads1115_config(void);
 
+uint8_t ads1115_wait_for_data(unsigned timeout_usec);
+
 // p27: register names
 enum { conversion_reg = 0, config_reg = 1 };
 

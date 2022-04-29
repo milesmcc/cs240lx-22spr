@@ -23,6 +23,7 @@
         "rpi-constants.h": "c",
         "kr-malloc.h": "c",
         "pinned-vm-asm.h": "c",
-        "variant": "c"
+        "variant": "c",
+        "bit-support.h": "c"
     }
 }

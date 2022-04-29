@@ -14,15 +14,17 @@
 #include "rpi.h"
 #include "assert.h"
 #include "i2c.h"
+// #include "bb-i2c.c"
 #include "ads1115.h"
 #include "libc/bit-support.h"
+#include "gpio.h"
 
 // for bitfield checking
 #include "libc/helper-macros.h"
 
 // p27: register names
 // enum { conversion_reg = 0, config_reg = 1 };
-
+#define ALERT_PIN 25
 
 // p21 states device will reset itself when you do an
 // i2c "general call" reset with 6h (6 hex = 0x6)
@@ -62,11 +64,27 @@ uint16_t ads1115_read16(uint8_t dev_addr, uint8_t reg) {
     return (data[0] << 8 | data[1]);
 }
 
+uint8_t ads1115_wait_for_data(unsigned timeout_usec) {
+    unsigned rb = timer_get_usec();
+    while (1) {
+        unsigned ra = timer_get_usec();
+        if (gpio_read(ALERT_PIN)) {
+            return 1;
+        }
+        if ((ra - rb) >= timeout_usec) {
+            break;
+        }
+    }
+    return 0;
+}
+
 // returns the device addr: hard-coded configuration atm.
 uint8_t ads1115_config(void) {
     delay_ms(30);   // allow time for device to boot up.
     i2c_init();
     delay_ms(30);   // allow time to settle after init.
+
+    gpio_set_input(25);
 
     // dev address: p23
     enum { dev_addr = 0b1001000 };
@@ -110,7 +128,7 @@ uint8_t ads1115_config(void) {
     c = 0;
     c = bits_set(c, 9, 11, 0b001);
     c = bit_clr(c, 8);
-    c = bits_set(c, 5, 7, 0b111);
+    c = bits_set(c, 5, 7, 0b000);
 
 	printk("writing config: 0x%x\n", c);
     ads1115_write16(dev_addr, config_reg, c);
@@ -120,7 +138,7 @@ uint8_t ads1115_config(void) {
     c = ads1115_read16(dev_addr, config_reg);
     demand(bits_eq(c, 9, 11, 0b001), "bad config");
     demand(bit_is_off(c, 8), "bad config");
-    demand(bits_eq(c, 5, 7, 0b111), "bad config");
+    demand(bits_eq(c, 5, 7, 0b000), "bad config");
 
     return dev_addr;
 }

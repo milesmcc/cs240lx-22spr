@@ -13,10 +13,11 @@
  */
 #include "rpi.h"
 #include "ads1115.h"
-#include "fft.h"
+#include "cycle-count.h"
 
 void notmain(void) {
     unsigned dev_addr = ads1115_config();
+    cycle_cnt_init();
 
     // 5. just loop and get readings.
     //  - vary your potentiometer
@@ -26,16 +27,25 @@ void notmain(void) {
     // 
     // make sure: given we set gain to +/- 4v.
     // does the result make sense?
-	// for(int i = 0; i < 1000; i++) {
-        while(1) {
+	for(int i = 0; i < 10000; i++) {
         short v = ads1115_read16(dev_addr, conversion_reg);
-        // printk("\r out=%d\n", v);
+        
+        unsigned s = cycle_cnt_read();
+        if (!ads1115_wait_for_data(100000)) {
+            printk("No data received in time!\n");
+            break;
+        }
+        unsigned e = cycle_cnt_read();
+
+        printk("%d\t", e - s);
+
         for(int i = 0; i < v; i += 200) {
             printk("#");
         }
+        
         printk("\n");
-		delay_ms(1);
 	}
+
 	clean_reboot();
 }
 
