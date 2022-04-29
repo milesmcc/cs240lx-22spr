@@ -25,10 +25,15 @@ void notmain(void) {
     // 
     // make sure: given we set gain to +/- 4v.
     // does the result make sense?
-	for(int i = 0; i < 10; i++) {
+	// for(int i = 0; i < 1000; i++) {
+        while(1) {
         short v = ads1115_read16(dev_addr, conversion_reg);
-        printk("out=%d\n", v);
-		delay_ms(1000);
+        // printk("\r out=%d\n", v);
+        for(int i = 0; i < v; i += 200) {
+            printk("#");
+        }
+        printk("\n");
+		delay_ms(1);
 	}
 	clean_reboot();
 }

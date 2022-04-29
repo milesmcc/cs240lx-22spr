@@ -12,6 +12,7 @@
    its own file so you can add it easily to other projects.
  */
 #include "rpi.h"
+#include "assert.h"
 #include "i2c.h"
 #include "ads1115.h"
 #include "libc/bit-support.h"
@@ -20,7 +21,7 @@
 #include "libc/helper-macros.h"
 
 // p27: register names
-enum { conversion_reg = ??, config_reg = ?? };
+// enum { conversion_reg = 0, config_reg = 1 };
 
 
 // p21 states device will reset itself when you do an
@@ -41,7 +42,11 @@ void ads1115_reset(void) {
 //  send it:
 //    3. call i2c_write with <dev_addr> and the array.
 void ads1115_write16(uint8_t dev_addr, uint8_t reg, uint16_t v) {
-    unimplemented();
+    char to_write[3];
+    to_write[0] = reg;
+    to_write[1] = v >> 8;
+    to_write[2] = v;
+    i2c_write(dev_addr, to_write, 3);
 }
 
 // read a 16-bit register
@@ -49,7 +54,12 @@ void ads1115_write16(uint8_t dev_addr, uint8_t reg, uint16_t v) {
 // 2. read the two bytes that come back (a 2-byte i2c_read)
 // 3. reconstruct the 16-bit value.
 uint16_t ads1115_read16(uint8_t dev_addr, uint8_t reg) {
-    unimplemented();
+    i2c_write(dev_addr, &reg, 1);
+
+    char data[2];
+    i2c_read(dev_addr, data, 2);
+
+    return (data[0] << 8 | data[1]);
 }
 
 // returns the device addr: hard-coded configuration atm.
@@ -59,8 +69,7 @@ uint8_t ads1115_config(void) {
     delay_ms(30);   // allow time to settle after init.
 
     // dev address: p23
-    enum { dev_addr = ?? };
-    panic("set dev_addr!\n");
+    enum { dev_addr = 0b1001000 };
 
     // p28
     // one way to set fields in a register.
@@ -89,21 +98,29 @@ uint8_t ads1115_config(void) {
     //   mode: 8 is 1
     //   dr: 7:5 = 0b100
     //   pg: 11:9 = 010
-    unimplemented();
+    demand(bit_is_on(c, 8), "bad initial config");
+    demand(bits_eq(c, 5, 7, 0b100), "bad initial config");
+    demand(bits_eq(c, 9, 11, 0b010), "bad initial config");
 
     // 3. set the config to:
     //  - PGA gain to +/-4v 
     //  - MODE to continuous.
     //  - DR to 860sps
     // see page 28.
-    unimplemented();
+    c = 0;
+    c = bits_set(c, 9, 11, 0b001);
+    c = bit_clr(c, 8);
+    c = bits_set(c, 5, 7, 0b111);
 
 	printk("writing config: 0x%x\n", c);
     ads1115_write16(dev_addr, config_reg, c);
 
     // 4. read back the config and make sure the fields we set
     // are correct.
-    unimplemented();
+    c = ads1115_read16(dev_addr, config_reg);
+    demand(bits_eq(c, 9, 11, 0b001), "bad config");
+    demand(bit_is_off(c, 8), "bad config");
+    demand(bits_eq(c, 5, 7, 0b111), "bad config");
 
     return dev_addr;
 }
