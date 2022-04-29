@@ -69,13 +69,13 @@ cexp(double complex z)
 		}
 	}
 
-	if (hx >= exp_ovfl && hx <= cexp_ovfl) {
-		/*
-		 * x is between 709.7 and 1454.3, so we must scale to avoid
-		 * overflow in exp(x).
-		 */
-		return (__ldexp_cexp(z, 0));
-	} else {
+	// if (hx >= exp_ovfl && hx <= cexp_ovfl && false) {
+	// 	/*
+	// 	 * x is between 709.7 and 1454.3, so we must scale to avoid
+	// 	 * overflow in exp(x).
+	// 	 */
+	// 	return (__ldexp_cexp(z, 0));
+	// } else {
 		/*
 		 * Cases covered here:
 		 *  -  x < exp_ovfl and exp(x) won't overflow (common case)
@@ -85,5 +85,5 @@ cexp(double complex z)
 		 */
 		exp_x = exp(x);
 		return (CMPLX(exp_x * cos(y), exp_x * sin(y)));
-	}
+	// }
 }

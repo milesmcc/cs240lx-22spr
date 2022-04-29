@@ -8,7 +8,8 @@ export USE_FP
 TEST_SRC = float.c
 
 # your source, shared by driver code.
-SRC :=
+SRC := ads1115.c fft.c
+STAFF_OBJS := staff-i2c.o
 # any staff objs
 # STAFF_OBJS := 
 

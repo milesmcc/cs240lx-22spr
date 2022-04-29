@@ -1,0 +1,1 @@
+fft.o: fft.c
