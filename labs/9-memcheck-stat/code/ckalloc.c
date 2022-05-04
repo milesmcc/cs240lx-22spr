@@ -11,6 +11,8 @@ static hdr_t *alloc_list;
 extern char __heap_start__;
 static char *max_heap = 0;
 
+void ckalloc_start(void) {}
+
 // returns pointer to the first header block.
 hdr_t *ck_first_hdr(void)
 {
@@ -178,3 +180,5 @@ void *(ckalloc)(uint32_t nbytes, src_loc_t l)
     return ((char *)(h + 1));
     // return h + 1;
 }
+
+void ckalloc_end(void) {}

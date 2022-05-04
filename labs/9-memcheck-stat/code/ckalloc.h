@@ -170,6 +170,13 @@ static inline void ck_verbose_set(int v) {
     ck_verbose_p = v;
 }
 
+
+
+/**************************************************************************
+ * lab 9
+ */
+
+
 // initialize interrupt checking.
 void ck_mem_init(void);
 

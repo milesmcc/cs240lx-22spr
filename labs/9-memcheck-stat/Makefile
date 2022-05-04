@@ -14,6 +14,8 @@ all: TARGET=all
 check: TARGET=check
 clean: TARGET=clean
 
+CFLAGS += -fno-toplevel-reorder
+
 # No, you can't do TARGET=$@, or at least I don't know how to.
 
 # recursive call to make

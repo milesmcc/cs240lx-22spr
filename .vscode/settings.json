@@ -24,6 +24,8 @@
         "kr-malloc.h": "c",
         "pinned-vm-asm.h": "c",
         "variant": "c",
-        "bit-support.h": "c"
+        "bit-support.h": "c",
+        "rpi-internal.h": "c",
+        "timer-interrupt.h": "c"
     }
 }

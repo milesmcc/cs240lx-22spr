@@ -1,8 +1,9 @@
 // starter code for trivial heap checking using interrupts.
 #include "rpi.h"
 #include "rpi-internal.h"
-#include "ckalloc-internal.h"
 #include "timer-interrupt.h"
+#include "rpi-armtimer.h"
+#include "ckalloc.h"
 
 
 // you'll need to pull your code from lab 2 here so you
@@ -30,7 +31,7 @@ static int in_range(uint32_t addr, uint32_t b, uint32_t e) {
 // if <pc> is in the range we want to check and not in the 
 // range we cannot check, return 1.
 int (ck_mem_checked_pc)(uint32_t pc) {
-    unimplemented();
+    return pc >= start_check && pc < end_check && !(pc >= start_nocheck && pc <= end_nocheck);
 }
 
 // useful variables to track: how many times we did 
@@ -57,11 +58,13 @@ void ck_mem_interrupt(uint32_t pc) {
 
     unimplemented();
 
-
     // we don't know what the user was doing.
     dev_barrier();
 }
 
+void interrupt_vector(uint32_t pc) {
+    ck_mem_interrupt(pc);
+}
 
 // do any interrupt init you need, etc.
 void ck_mem_init(void) { 
@@ -72,13 +75,16 @@ void ck_mem_init(void) {
     assert(in_range((uint32_t)ckfree, start_nocheck, end_nocheck));
     assert(!in_range((uint32_t)printk, start_nocheck, end_nocheck));
 
-    unimplemented();
+    int_init();
+    timer_interrupt_init(100);
 }
 
 // only check pc addresses [start,end)
 void ck_mem_set_range(void *start, void *end) {
     assert(start < end);
-    unimplemented();
+
+    start_check = (uint32_t) start;
+    end_check = (uint32_t) end;
 }
 
 // maybe should always do the heap check at the begining
@@ -86,13 +92,13 @@ void ck_mem_on(void) {
     assert(init_p && !check_on);
     check_on = 1;
 
-    unimplemented();
+    system_enable_interrupts();
 }
 
 // maybe should always do the heap check at the end.
 void ck_mem_off(void) {
     assert(init_p && check_on);
 
-    unimplemented();
+    system_disable_interrupts();
     check_on = 0;
 }
