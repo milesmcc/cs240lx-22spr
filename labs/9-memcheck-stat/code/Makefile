@@ -10,12 +10,11 @@ SUPPORT_OBJS := ckalloc.o ck-memcheck.o kr-malloc.o ck-gc.o gc-asm.o interrupts-
 # define this if you need to give the device for your pi
 TTYUSB = 
 
-CFLAGS += -fno-toplevel-reorder
-
 # set RUN = 1 if you want the code to automatically run after building.
 RUN = 1
 
-CFLAGS_EXTRA =  -fno-omit-frame-pointer -mpoke-function-name
+CFLAGS_EXTRA = -fno-toplevel-reorder -fno-omit-frame-pointer -mpoke-function-name -fsanitize=kernel-address
+
 
 DEPS = ./Makefile
 include $(CS240LX_2022_PATH)/libpi/mk/Makefile.template

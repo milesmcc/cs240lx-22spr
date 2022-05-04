@@ -28,7 +28,7 @@ static uint32_t
 
 static int should_overwrite(uint32_t instruction) {
     return 0xe5000000 == (instruction & 0xff000000) && // Is a load or store
-        !((0x000f0000 & instruction ) != 0x000f0000); // Does not involve pc
+        ((0x000f0000 & instruction ) != 0x000f0000); // Does not involve pc
 }
 
 static inline uint32_t arm_b(uint32_t from, uint32_t to) {
@@ -41,8 +41,12 @@ static inline uint32_t arm_bl(uint32_t from, uint32_t to) {
     return 0xeb000000 | ((delta) & (0xffffff));
 }
 
+void asan_access(unsigned long addr, size_t sz, char write) {
+    
+}
+
 static int check_heap_wrapper() {
-    printk("[Call to check_heap_wrapper!]\n");
+    // printk("[Call to check_heap_wrapper!]\n");
     return ck_heap_errors();
 }
 
@@ -137,7 +141,7 @@ void ck_mem_init(void) {
     assert(!in_range((uint32_t)printk, start_nocheck, end_nocheck));
 
     int_init();
-    timer_interrupt_init(256);
+    timer_interrupt_init(100);
 }
 
 // only check pc addresses [start,end)

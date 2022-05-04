@@ -14,7 +14,7 @@ all: TARGET=all
 check: TARGET=check
 clean: TARGET=clean
 
-CFLAGS += -fno-toplevel-reorder
+CFLAGS_EXTRA += -fno-toplevel-reorder -fsanitize=kernel-address
 
 # No, you can't do TARGET=$@, or at least I don't know how to.
 
