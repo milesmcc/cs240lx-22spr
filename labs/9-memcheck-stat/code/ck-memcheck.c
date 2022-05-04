@@ -31,13 +31,13 @@ static int in_range(uint32_t addr, uint32_t b, uint32_t e) {
 // if <pc> is in the range we want to check and not in the 
 // range we cannot check, return 1.
 int (ck_mem_checked_pc)(uint32_t pc) {
-    return pc >= start_check && pc < end_check && !(pc >= start_nocheck && pc <= end_nocheck);
+    return in_range(pc, start_check, end_check) && !(in_range(pc, start_nocheck, end_nocheck));
 }
 
 // useful variables to track: how many times we did 
 // checks, how many times we skipped them b/c <ck_mem_checked_pc>
 // returned 0 (skipped)
-static volatile unsigned checked = 0, skipped = 0;
+static volatile unsigned checked = 0, skipped = 0, errors = 0;
 
 unsigned ck_mem_stats(int clear_stats_p) { 
     unsigned s = skipped, c = checked, n = s+c;
@@ -51,12 +51,23 @@ unsigned ck_mem_stats(int clear_stats_p) {
 // note: lr = the pc that we were interrupted at.
 // longer term: pass in the entire register bank so we can figure
 // out more general questions.
-void ck_mem_interrupt(uint32_t pc) {
-
+static inline void ck_mem_interrupt(uint32_t pc) {
     // we don't know what the user was doing.
     dev_barrier();
 
-    unimplemented();
+    unsigned pending = GET32(IRQ_basic_pending);
+    if((pending & RPI_BASIC_ARM_TIMER_IRQ) == 0)
+        return;
+    PUT32(arm_timer_IRQClear, 1);
+
+    if (ck_mem_checked_pc(pc)) {
+        checked++;
+        if (ck_heap_errors()) {
+            errors++;
+        }
+    } else {
+        skipped++;
+    }
 
     // we don't know what the user was doing.
     dev_barrier();
@@ -76,7 +87,7 @@ void ck_mem_init(void) {
     assert(!in_range((uint32_t)printk, start_nocheck, end_nocheck));
 
     int_init();
-    timer_interrupt_init(100);
+    timer_interrupt_init(256);
 }
 
 // only check pc addresses [start,end)
@@ -99,6 +110,6 @@ void ck_mem_on(void) {
 void ck_mem_off(void) {
     assert(init_p && check_on);
 
-    system_disable_interrupts();
     check_on = 0;
+    system_disable_interrupts();
 }

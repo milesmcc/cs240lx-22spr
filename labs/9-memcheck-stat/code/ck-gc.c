@@ -23,7 +23,7 @@ int ck_heap_errors(void) {
     for (hdr_t *h = ck_first_hdr(); h; h = ck_next_hdr(h), n_blocks++) {
         for (int i = 0; i < REDZONE_NBYTES; i++) {
             if (h->rz1[i] != REDZONE_VAL) {
-                ck_error(h, "block %d corrupted at offset %d\n", h->block_id, (uint32_t) &h->rz1[i] - (uint32_t) ck_hdr_start(h));
+                // ck_error(h, "block %d corrupted at offset %d\n", h->block_id, (uint32_t) &h->rz1[i] - (uint32_t) ck_hdr_start(h));
                 n_errors++;
             }
         }
@@ -31,7 +31,7 @@ int ck_heap_errors(void) {
         uint8_t* rz2 = ck_hdr_end(h);
         for (int i = 0; i < REDZONE_NBYTES; i++) {
             if (rz2[i] != REDZONE_VAL) {
-                ck_error(h, "block %d corrupted at offset %d\n", h->block_id, (uint32_t) &rz2[i] - (uint32_t) ck_hdr_start(h));
+                // ck_error(h, "block %d corrupted at offset %d\n", h->block_id, (uint32_t) &rz2[i] - (uint32_t) ck_hdr_start(h));
                 n_errors++;
             }
         }
@@ -39,15 +39,15 @@ int ck_heap_errors(void) {
         if (h->state == FREED) {
             for (uint8_t* p = ck_hdr_start(h); p < (uint8_t*) ck_hdr_end(h); p++) {
                 if (*p != REDZONE_VAL) {
-                    ck_error(h, "block %d corrupted at offset %d\n", h->block_id, (uint32_t) p - (uint32_t) ck_hdr_start(h));
-                    trace("  Wrote block after free!\n");
+                    // ck_error(h, "block %d corrupted at offset %d\n", h->block_id, (uint32_t) p - (uint32_t) ck_hdr_start(h));
+                    // trace("  Wrote block after free!\n");
                     n_errors++;
                 }
             }
         }
     }
 
-	trace("checked %d blocks, detected %d errors\n", n_blocks, n_errors);
+	// trace("checked %d blocks, detected %d errors\n", n_blocks, n_errors);
 
     return n_errors;
 }

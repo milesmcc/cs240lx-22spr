@@ -12,10 +12,8 @@
 void test_nullcheck(void) { 
     ck_mem_on();
 
-
     // don't do anything of note.
-    delay_ms(100);
-
+    delay_ms(1000);
 
     ck_mem_off();
 
@@ -24,14 +22,12 @@ void test_nullcheck(void) {
 void test_nullcheck_end(void) {  }
 
 void test_check(void) { 
-
-
     volatile char *p = ckalloc(N);
 
     ck_mem_on();
     ckfree((void*)p);
     *p = 1;
-    for(int j = 0; j < 1000; j++)
+    for(int j = 0; j < 100000; j++)
         dummy(j);
 
     ck_mem_off();
@@ -54,7 +50,7 @@ void notmain(void) {
     test_check();
 
     printk("about to call again\n");
-    if(ck_heap_errors())
+    if(!ck_heap_errors())
         panic("FAIL: no heap errors??\n");
     else
         trace("SUCCESS heap checked out\n");

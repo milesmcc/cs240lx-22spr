@@ -74,7 +74,7 @@ void notmain(void) {
     test_check();
 
     printk("about to call again\n");
-    if(ck_heap_errors())
+    if(!ck_heap_errors())
         panic("FAIL: no heap errors??\n");
     else
         trace("SUCCESS heap checked out\n");
