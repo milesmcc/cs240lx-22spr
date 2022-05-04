@@ -1,0 +1,1 @@
+LOC_PANIC: tests-2.0/part1-test2-bug.c:notmain:10:redzone #2 was corrupted!

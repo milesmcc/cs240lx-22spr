@@ -1,0 +1,3 @@
+TRACE:SUCCESS heap checked out
+TRACE:corrupting 0x13ee74 at offset 173 (0x13ef21)
+TRACE:SUCCESS found error

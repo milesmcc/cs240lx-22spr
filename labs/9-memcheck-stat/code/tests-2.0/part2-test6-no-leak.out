@@ -1,0 +1,7 @@
+TRACE:alloc returned block id=0 
+TRACE:test1 returned 
+TRACE:	GC:Checked 1 blocks.
+TRACE:		GC:ERRORS: 0 errors, 1 maybe_errors
+TRACE:	GC:Checked 1 blocks.
+TRACE:		GC:ERRORS: 0 errors, 1 maybe_errors
+TRACE:SUCCESS: detected a maybe leak!
