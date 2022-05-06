@@ -5,6 +5,8 @@
 #include "rpi-armtimer.h"
 #include "ckalloc.h"
 
+#include "asan.h"
+
 typedef struct trampoline_t {
     unsigned push, bl, pop, inst, ret;
 } trampoline_t;
@@ -39,10 +41,6 @@ static inline uint32_t arm_b(uint32_t from, uint32_t to) {
 static inline uint32_t arm_bl(uint32_t from, uint32_t to) {
     int32_t delta = (to - (from + 8)) / 4;
     return 0xeb000000 | ((delta) & (0xffffff));
-}
-
-void asan_access(unsigned long addr, size_t sz, char write) {
-    
 }
 
 static int check_heap_wrapper() {

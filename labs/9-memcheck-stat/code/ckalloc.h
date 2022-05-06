@@ -6,6 +6,8 @@
 
 #include "src-loc.h"
 
+#define SHADOW_OFFSET 0x10000000
+
 typedef enum {  ALLOCED = 11, FREED } state_t;
 enum { REDZONE_NBYTES = 128, REDZONE_VAL = 0xfe };
 

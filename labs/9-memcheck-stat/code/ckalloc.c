@@ -7,7 +7,6 @@
 // keep a list of allocated blocks.
 static hdr_t *alloc_list;
 
-#define SHADOW_OFFSET 0x10000000
 extern char __heap_start__;
 static char *max_heap = 0;
 
