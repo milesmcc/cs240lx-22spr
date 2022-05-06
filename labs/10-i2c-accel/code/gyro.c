@@ -74,7 +74,7 @@ enum {
     GYRO_CONFIG = 29, 
 
     // p6, p14
-    gyro_config_reg = 0x1b,
+    gyro_config_reg = 26,
     gyro_250dps  = 0b00,
     gyro_500dps  = 0b01,
     gyro_1000dps = 0b10,
@@ -82,6 +82,11 @@ enum {
 
     // p7
     GYRO_XOUT_H = 67,
+    GYRO_XOUT_L = 68,
+    GYRO_YOUT_H = 69,
+    GYRO_YOUT_L = 70,
+    GYRO_ZOUT_H = 71,
+    GYRO_ZOUT_L = 72,
 };
 
 
@@ -105,7 +110,8 @@ gyro_t mpu6500_gyro_init(uint8_t addr, unsigned gyro_dps) {
     // gyro config
     // set 20hz (p13)
     // set dps (p14)
-    unimplemented();
+    imu_wr(addr, gyro_config_reg, 4); // 20hz
+    imu_wr(addr, gyro_config_reg + 1, gyro_dps << 3);
     return (gyro_t) { .addr = addr, .dps = dps, .hz = 20 };
 }
 
@@ -167,7 +173,9 @@ imu_xyz_t gyro_rd(const gyro_t *h) {
         ;
 
     int x = 0, y = 0, z = 0;
-    unimplemented();
+    x = mg_raw(imu_rd(addr, GYRO_XOUT_H), imu_rd(addr, GYRO_XOUT_H));
+    y = mg_raw(imu_rd(addr, GYRO_YOUT_H), imu_rd(addr, GYRO_YOUT_H));
+    z = mg_raw(imu_rd(addr, GYRO_ZOUT_H), imu_rd(addr, GYRO_ZOUT_H));
 
     return xyz_mk(x,y,z);
 }
@@ -186,7 +194,10 @@ void mpu6500_reset(uint8_t addr) {
     // reset
 
     // just from accel.c
-    unimplemented();
+    // reset: p41
+    imu_wr(addr, 107, 1);
+
+    delay_ms(100);
 }
 
 /**********************************************************************
@@ -206,7 +217,7 @@ void notmain(void) {
         // this is default: but seems we can get 0x71 too
         WHO_AM_I_VAL1 = 0x70,       
         WHO_AM_I_VAL2 = 0x71,
-        WHO_AM_I_VAL3 = 0b1110100
+        WHO_AM_I_VAL3 = 0b1101000
     };
 
     uint8_t v = imu_rd(dev_addr, WHO_AM_I_REG);

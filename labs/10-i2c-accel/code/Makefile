@@ -1,5 +1,5 @@
 # list out the driver program source 
-TEST_SRC = accel.c
+TEST_SRC = gyro.c
 
 # OPT_LEVEL = -O
 
