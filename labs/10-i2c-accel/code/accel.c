@@ -16,6 +16,7 @@
 // to re-use the code.
 #include "rpi.h"
 #include "i2c.h"
+#include "bit-support.h"
 #include <limits.h>
 
 // it's easier to bundle these together.
@@ -71,7 +72,7 @@ typedef struct {
 // returns the raw value from the sensor: combine
 // the low and the hi and sign extend (cast to short)
 static short mg_raw(uint8_t lo, uint8_t hi) {
-    unimplemented();
+    return (short) ((short)hi << 8 | lo);
 }
 
 // returns milligauss, integer
@@ -110,11 +111,11 @@ enum {
 
     // p31,32
     ACCEL_XOUT_H = 0x3b,
-    accel_xout_l = 0x3c,
-    accel_yout_h = 0x3d,
-    accel_yout_l = 0x3e,
-    accel_zout_h = 0x3f,
-    accel_zout_l = 0x40,
+    ACCEL_XOUT_L = 0X3C,
+    ACCEL_YOUT_H = 0X3D,
+    ACCEL_YOUT_L = 0X3E,
+    ACCEL_ZOUT_H = 0X3F,
+    ACCEL_ZOUT_L = 0X40,
 
     // p 41
     PWR_MGMT_1 = 107,
@@ -139,7 +140,11 @@ accel_t mpu6500_accel_init(uint8_t addr, unsigned accel_g) {
     }
 
     // set scaling to <accel_g> and 20hz sample rate
-    unimplemented();
+    short config = imu_rd(addr, 0x1D);
+    bits_set(config, 3, 4, accel_g);
+    imu_wr(addr, accel_config_reg, config);
+
+    imu_wr(addr, accel_config_reg2, 4); // p15 of register map2
 
     output("accel_config_reg=%b\n", imu_rd(addr, accel_config_reg));
     output("accel_config_reg2=%b\n", imu_rd(addr, accel_config_reg2));
@@ -149,7 +154,7 @@ accel_t mpu6500_accel_init(uint8_t addr, unsigned accel_g) {
 // do a hard reset
 void mpu6500_reset(uint8_t addr) {
     // reset: p41
-    unimplemented();
+    imu_wr(addr, PWR_MGMT_1, 1);
 
     // they don't give a delay; but it's typical you need one.
     delay_ms(100);
@@ -179,7 +184,9 @@ imu_xyz_t accel_rd(const accel_t *h) {
     // read in the x,y,z from the accel using imu_rd_n
     int x = 0, y = 0, z = 0;
 
-    unimplemented();
+    x = mg_raw(imu_rd(addr, ACCEL_XOUT_L), imu_rd(addr, ACCEL_XOUT_H));
+    y = mg_raw(imu_rd(addr, ACCEL_YOUT_L), imu_rd(addr, ACCEL_YOUT_H));
+    z = mg_raw(imu_rd(addr, ACCEL_ZOUT_L), imu_rd(addr, ACCEL_ZOUT_H));
 
     return xyz_mk(x,y,z);
 }
@@ -199,8 +206,8 @@ void notmain(void) {
     enum { 
         WHO_AM_I_REG      = 0x75, 
         // this is default: but seems we can get 0x71 too
-        WHO_AM_I_VAL1 = 0x70,       
-        WHO_AM_I_VAL2 = 0x71 
+        WHO_AM_I_VAL1 = 0b1110001,       
+        WHO_AM_I_VAL2 = 0b01101000 
     };
 
     uint8_t v = imu_rd(dev_addr, WHO_AM_I_REG);
