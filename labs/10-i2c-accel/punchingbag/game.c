@@ -17,7 +17,18 @@
 #include "rpi.h"
 #include "i2c.h"
 #include "bit-support.h"
+#include "rpi.h"
+#include "ads1115.h"
+#include "gpio.h"
+#include "cycle-count.h"
+#include "neopixel.h"
+
 #include <limits.h>
+
+enum
+{
+    pix_pin = 21
+};
 
 // it's easier to bundle these together.
 typedef struct { int x,y,z; } imu_xyz_t;
@@ -35,7 +46,7 @@ void xyz_print(const char *msg, imu_xyz_t xyz) {
 // read register <reg> from i2c device <addr>
 uint8_t imu_rd(uint8_t addr, uint8_t reg) {
     i2c_write(addr, &reg, 1);
-        
+    
     uint8_t v;
     i2c_read(addr,  &v, 1);
     return v;
@@ -155,10 +166,10 @@ accel_t mpu6500_accel_init(uint8_t addr, unsigned accel_g) {
 void mpu6500_reset(uint8_t addr) {
     // reset: p41
     imu_wr(addr, PWR_MGMT_1, 1 << 7);
+    delay_ms(100);
     imu_wr(addr, PWR_MGMT_1, 0);
 
     // they don't give a delay; but it's typical you need one.
-    delay_ms(100);
 }
 
 
@@ -192,6 +203,48 @@ imu_xyz_t accel_rd(const accel_t *h) {
     return xyz_mk(x,y,z);
 }
 
+unsigned abs(int val) {
+    return val < 0 ? val * -1 : val;
+}
+
+int rolling_log(imu_xyz_t values) {
+    static int rolling_avg = -1;
+    int avg = (abs(values.x) + abs(values.y) + abs(values.z)) / 3;
+    if (rolling_avg < 0) {
+        rolling_avg = avg;
+    } else {
+        rolling_avg = (rolling_avg * 9 + avg * 1) / 10;
+    }
+    return rolling_avg;
+}
+
+int rolling_log_slow(imu_xyz_t values) {
+    static int rolling_avg = -1;
+    int avg = (abs(values.x) + abs(values.y) + abs(values.z)) / 3;
+    if (rolling_avg < 0) {
+        rolling_avg = avg;
+    } else {
+        rolling_avg = (rolling_avg * 98 + avg * 2) / 100;
+    }
+    return rolling_avg;
+}
+
+#define ALERT_PIN 5
+
+uint8_t wait_for_data(unsigned timeout_usec) {
+    unsigned rb = timer_get_usec();
+    while (1) {
+        unsigned ra = timer_get_usec();
+        if (gpio_read(ALERT_PIN)) {
+            return 1;
+        }
+        if ((ra - rb) >= timeout_usec) {
+            break;
+        }
+    }
+    return 0;
+}
+
 
 /**********************************************************************
  * trivial driver.
@@ -221,23 +274,41 @@ void notmain(void) {
     // hard reset: it won't be when your pi reboots.
     mpu6500_reset(dev_addr);
 
-    // first test that your scaling works.
-    // this is device independent.
-    test_mg(0, 0x00, 0x00, 2);
-    test_mg(350, 0x16, 0x69, 2);
-    test_mg(1000, 0x40, 0x09, 2);
-    test_mg(-350, 0xe9, 0x97, 2);
-    test_mg(-1000, 0xbf, 0xf7, 2);
-
     // part 1: get the accel working.
     accel_t h = mpu6500_accel_init(dev_addr, accel_2g);
     assert(h.g==2);
-    for(int i = 0; i < 100; i++) {
+
+    enable_cache();
+    gpio_set_output(pix_pin);
+    gpio_set_input(ALERT_PIN);
+
+    unsigned npixels = 200; // you'll have to figure this out.
+    neo_t neopix = neopix_init(pix_pin, npixels);
+
+    for(int i = 0; i < 5000; i++) {
+        wait_for_data(100000);
+
         imu_xyz_t xyz_raw = accel_rd(&h);
         output("reading %d\n", i);
         xyz_print("\traw", xyz_raw);
-        xyz_print("\tscaled (milligaus: 1000=1g)", accel_scale(&h, xyz_raw));
+        xyz_print("\t!!!scaled (milligaus: 1000=1g)", accel_scale(&h, xyz_raw));
 
-        delay_ms(1000);
+        int cur_val = rolling_log(xyz_raw);
+        int rolling_val = rolling_log_slow(xyz_raw);
+
+        int max = cur_val < rolling_val ? rolling_val : cur_val;
+
+        const int scale = 80;
+        for(int g = 0; g < max / scale; g++) {
+            int cur = scale * g;
+            if (cur < cur_val && cur < rolling_val) {
+                neopix_write(neopix, g, 50, 50, 50);
+            } else if (cur < rolling_val) {
+                neopix_write(neopix, g, 0, 50, 0);
+            } else {
+                neopix_write(neopix, g, 50, 0, 0);
+            }
+        }
+        neopix_flush(neopix);
     }
 }

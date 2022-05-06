@@ -173,9 +173,9 @@ imu_xyz_t gyro_rd(const gyro_t *h) {
         ;
 
     int x = 0, y = 0, z = 0;
-    x = mg_raw(imu_rd(addr, GYRO_XOUT_H), imu_rd(addr, GYRO_XOUT_H));
-    y = mg_raw(imu_rd(addr, GYRO_YOUT_H), imu_rd(addr, GYRO_YOUT_H));
-    z = mg_raw(imu_rd(addr, GYRO_ZOUT_H), imu_rd(addr, GYRO_ZOUT_H));
+    x = mg_raw(imu_rd(addr, GYRO_XOUT_H), imu_rd(addr, GYRO_XOUT_L));
+    y = mg_raw(imu_rd(addr, GYRO_YOUT_H), imu_rd(addr, GYRO_YOUT_L));
+    z = mg_raw(imu_rd(addr, GYRO_ZOUT_H), imu_rd(addr, GYRO_ZOUT_L));
 
     return xyz_mk(x,y,z);
 }
@@ -195,9 +195,9 @@ void mpu6500_reset(uint8_t addr) {
 
     // just from accel.c
     // reset: p41
-    imu_wr(addr, 107, 1);
-
+    imu_wr(addr, 107, 1 << 7);
     delay_ms(100);
+    imu_wr(addr, 107, 0);
 }
 
 /**********************************************************************
