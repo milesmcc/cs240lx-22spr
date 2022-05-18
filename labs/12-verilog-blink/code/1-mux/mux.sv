@@ -4,5 +4,5 @@ module mux
         input logic sel,
         output logic out
     );
-    // TODO
+    assign out = sel ? a : b;
 endmodule

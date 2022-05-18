@@ -10,5 +10,5 @@ module led_top
         input logic rx,
         output logic tx
     );
-    // TODO
+    assign led_r = '1;
 endmodule
