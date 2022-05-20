@@ -5,7 +5,7 @@
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 
-#define DEBUG 0
+#define DEBUG 1
 
 #if (DEBUG == 1)
 #define dprintf(args...) printf(args)

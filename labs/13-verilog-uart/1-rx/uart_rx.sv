@@ -43,6 +43,7 @@ module uart_rx
         dout_index_next = dout_index_reg;
         rx_done_next = rx_done_tick;
         ticks_next = ticks_reg;
+        rx_done_next = 0;
 
         if (tick) begin
             ticks_next = ticks_reg + 1;
@@ -67,11 +68,11 @@ module uart_rx
                         dout_index_next = dout_index_reg + 1;
                         if (dout_index_reg == 7) begin
                             state_next = stop;
-                            rx_done_next = '1;
                         end
                     end
                 end
                 stop: begin
+                    rx_done_next = '1;
                     if (ticks_reg == 7) begin
                         state_next = idle;
                     end
