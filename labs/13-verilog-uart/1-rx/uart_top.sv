@@ -14,7 +14,7 @@ module uart_top
     logic tick;
 
     // baud rate of 19200 oversampled 16x on our CLK_MHZ clock:
-    // TODO: localparam div = ...;
+    localparam div = (`CLK_MHZ * 1000000) / (19200 * 16);
 
     counter #(.M(div)) baud_generator (
         .clk, .rst(rst),
