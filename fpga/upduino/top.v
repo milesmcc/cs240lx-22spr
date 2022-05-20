@@ -6,8 +6,10 @@ module top
         output wire led_green,
         output wire led_blue,
 
-        // output wire gpio_25,
-        // input wire gpio_23,
+        output wire gpio_28,
+        input wire gpio_38,
+        output wire gpio_2,
+        input wire gpio_46,
         output wire serial_txd,
         input wire serial_rxd,
 
@@ -27,6 +29,10 @@ module top
         .led_b (led_b),
         .tx (serial_txd),
         .rx (serial_rxd),
+        .gpio_28,
+        .gpio_38,
+        .gpio_2,
+        .gpio_46,
         .clk (clk_sys),
         .rst (1'b0)
     );
