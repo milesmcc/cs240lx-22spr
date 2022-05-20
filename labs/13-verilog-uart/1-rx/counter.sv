@@ -7,7 +7,7 @@ module counter
         input  logic clk, rst,
         output logic max_tick
     );
-    logic [($clog2(M)+1)-1:0] count;
+    logic [31:0] count;
 
     always_ff @(posedge clk, posedge rst)
         if (rst)
