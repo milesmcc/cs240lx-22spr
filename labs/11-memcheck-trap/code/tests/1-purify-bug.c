@@ -6,6 +6,7 @@ void notmain(void) {
     trace("should detect memory overflow at 1 byte past block end\n");
 
     purify_init();
+    trace("purify init!\n");
     char *p = purify_alloc(4);
     trace("allocated [addr=%x]: about to store\n", p);
     memset(p, 0, 4);

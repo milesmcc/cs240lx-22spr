@@ -1,6 +1,7 @@
 #include "rpi.h"
 #include "backtrace.h"
 #include "rpi-interrupts.h"
+#include "va-printk.h"
 
 /* Type: frame_t
  * -------------
@@ -40,6 +41,37 @@ int backtrace() {
     }
 
     return -1;
+}
+
+int printbuf(char *buf, int n, const char *fmt, ...) {
+    va_list args;
+
+    va_start(args, fmt);
+    int sz = va_printk(buf, n, fmt, args);
+    va_end(args);
+
+    return sz;
+}
+
+char *backtrace_buf() {
+    char *out = kmalloc(1024);
+    int n = 0;
+
+    unsigned *cur_fp;    
+    __asm__("mov %0, fp" : "=r" (cur_fp));
+
+    for (int i = 0; i < 32 && (cur_fp != 0); i++) {
+        unsigned pc = *(cur_fp) - 12;
+        n += printbuf(out + n, 1024, "    #%d %x (%s)\n", i, pc, name_of(pc)) - 1;
+        printk("[storing] #%d %x (%s); n=%d\n", i, pc, name_of(pc), n);
+        printk("Current: %s (length: %d)\n\n", out, strlen(out));
+        cur_fp = (unsigned *) *(cur_fp - 3);
+        if (cur_fp == 0) {
+            break;
+        }
+    }
+
+    return out;
 }
 
 /*

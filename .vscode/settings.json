@@ -26,6 +26,9 @@
         "variant": "c",
         "bit-support.h": "c",
         "rpi-internal.h": "c",
-        "timer-interrupt.h": "c"
+        "timer-interrupt.h": "c",
+        "__string": "c",
+        "cstring": "c",
+        "backtrace.h": "c"
     }
 }

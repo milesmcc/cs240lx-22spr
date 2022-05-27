@@ -6,7 +6,7 @@ TEST_SRC += tests/03-test.c
 TEST_SRC += tests/04-test.c
 TEST_SRC += tests/05-test.c
 
-TEST_SRC += tests/1-purify-bug.c
+TEST_SRC = tests/1-purify-bug.c
 TEST_SRC += tests/2-purify-bug.c
 TEST_SRC += tests/3-purify-free-bug.c
 TEST_SRC += tests/4-purify-bug.c
@@ -15,14 +15,19 @@ TEST_SRC += tests/5-purify-no-bug.c
 TEST_SRC += tests/6-purify-no-bug-slow.c
 TEST_SRC += tests/7-purify-no-bug.c
 
+TEST_SRC = tests/3-purify-free-bug.c
+
 SUPPORT_OBJS = memtrace.o
 SUPPORT_OBJS  += checker-purify.o 
 SUPPORT_OBJS  += full-except.o
+SUPPORT_OBJS  += ckalloc.o
 
 STAFF_OBJS += staff-switchto-asm.o
 STAFF_OBJS += staff-full-except-asm.o
 STAFF_OBJS += staff-breakpoint.o
 STAFF_OBJS += staff-memtrace-util.o
+
+CFLAGS_EXTRA =  -fno-omit-frame-pointer -mpoke-function-name
 
 LPI_STAFF_OBJS = $(CS240LX_2022_PATH)/libpi/staff-objs/
 
@@ -33,7 +38,7 @@ STAFF_OBJS += $(LPI_STAFF_OBJS)/interrupts-vec-asm.o
 STAFF_OBJS += $(LPI_STAFF_OBJS)/staff-pinned-vm.o
 STAFF_OBJS += $(LPI_STAFF_OBJS)/staff-mmu-asm.o
 STAFF_OBJS += $(LPI_STAFF_OBJS)/staff-mmu.o
-STAFF_OBJS += $(LPI_STAFF_OBJS)/ckalloc.o  
+# STAFF_OBJS += $(LPI_STAFF_OBJS)/ckalloc.o  
 STAFF_OBJS += $(LPI_STAFF_OBJS)/kr-malloc.o  
 
 # define this if you need to give the device for your pi

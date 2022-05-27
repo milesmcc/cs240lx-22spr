@@ -26,6 +26,7 @@ typedef struct ck_hdr {
     uint32_t refs_middle;   // number of pointers to the middle of the block.
 
     uint16_t mark;          // 0 initialize.
+    char *free_backtrace;
     
     uint8_t rz1[REDZONE_NBYTES];
 } hdr_t;

@@ -20,6 +20,7 @@ typedef struct ck_hdr {
     uint32_t block_id;
 
     src_loc_t alloc_loc;    // location they called ckalloc() at.
+    // char *backtrace_buf;
 
     // used for gc: i didn't cksum these.
     uint32_t refs_start;    // number of pointers to the start of the block.

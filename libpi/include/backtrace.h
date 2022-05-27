@@ -3,6 +3,8 @@
 
 int backtrace();
 
+char *backtrace_buf();
+
 /*
  * `name_of`
  *

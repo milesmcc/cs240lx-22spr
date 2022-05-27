@@ -127,7 +127,7 @@ data_abort_print_reason(uint32_t pc) {
     switch(reason) {
     // b4-20
     case SECTION_XLATE_FAULT:
-        panic("section xlate fault: %x\n", fault_addr);
+        panic("section xlate fault: %x @ %p\n", fault_addr, pc);
     case SECTION_PERM_FAULT:
         panic("section permission fault: pc=%x: addr=%x", pc,fault_addr);
     default: panic("unknown reason %b\n", reason);
