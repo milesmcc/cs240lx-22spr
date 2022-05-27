@@ -124,13 +124,19 @@ data_abort_print_reason(uint32_t pc) {
     uint32_t reason = data_abort_reason();
     uint32_t fault_addr = data_abort_addr();
 
+    printk("DATA ABORT at pc=%p\n", pc);
+
     switch(reason) {
     // b4-20
     case SECTION_XLATE_FAULT:
-        panic("section xlate fault: %x\n", fault_addr);
+        printk("section xlate fault: %x\n", fault_addr);
+        break;
     case SECTION_PERM_FAULT:
-        panic("section permission fault: pc=%x: addr=%x", pc,fault_addr);
-    default: panic("unknown reason %b\n", reason);
+        printk("section permission fault: pc=%x: addr=%x", pc,fault_addr);
+        break;
+    default: printk("unknown reason %b\n", reason);
     }
+
+    return reason;
 }
 #endif

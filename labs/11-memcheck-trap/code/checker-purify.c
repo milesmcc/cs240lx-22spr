@@ -29,7 +29,7 @@ static inline int in_heap(uint32_t addr) {
     void *p = (void*)addr;
     if(p >= heap_start && p < heap_end)
         return 1;
-    return 1;
+    return 0;
 }
 
 // gross: we replicate this from ck-gc.c
@@ -78,7 +78,7 @@ static void purify_error(uint32_t pc, void *addr, const char *op) {
     // allocated block's redzones or header.
     hdr_t *h = ck_get_containing_blk(addr);
     if(!h)
-        panic("ERROR: illegal %s to pointer [%x]:  not within a known block\n", 
+        panic("ERROR: illegal %s pointer [%x]:  not within a known block\n", 
                 op, addr);
 
     int offset = ck_illegal_offset(h, addr);
@@ -150,7 +150,9 @@ void purify_init(void) {
 
     // gross that this is hardcoded.
     heap_start = kmalloc_heap_start();
-    heap_end = heap_start + 1024*1024;
+    heap_end = heap_start + 512*1024;
+
+    printk("heap_start = %p, heap_end = %p\n", heap_start, heap_end);
 
     memtrace_on();
 }
