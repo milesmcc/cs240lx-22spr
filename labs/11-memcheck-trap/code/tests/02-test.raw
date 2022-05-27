@@ -1,19 +1,12 @@
-find-ttyusb.c:find_ttyusb:55:FOUND: </dev/ttyUSB0>
-opened tty port </dev/ttyUSB0>.
-pi-install: tty-usb=</dev/ttyUSB0> program=<./tests/02-test.bin> about to boot
-HASH: simple_boot: sending 21212 bytes, crc32=41eef8e1
-waiting for a start
-putting code
-pi sent print: <<Flynn Dreilinger Lab 4>: success: Received the program!
->
+opened tty port </dev/cu.usbserial-0001>.
+my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests/02-test.bin> about to boot
+TRACE:simple_boot: sending 30908 bytes, crc32=c28b2aaf
+waiting for a start...
+PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
 bootloader: Done.
-listening on ttyusb=</dev/ttyUSB0>
 TRACE:test that memtrace_init sets things up and doesn't crash
-memtrace_dom = 2
 TRACE:about to reference stack memory: should not fault
 TRACE:success!!
 DONE!!!
-
-Saw done
 
 bootloader: pi exited.  cleaning up
