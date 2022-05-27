@@ -2,3 +2,16 @@ opened tty port </dev/cu.usbserial-0001>.
 my-install: tty-usb=</dev/cu.usbserial-0001> program=<./tests/1-purify-bug.bin> about to boot
 TRACE:simple_boot: sending 29812 bytes, crc32=62f1af9f
 waiting for a start...
+PRINT_STRING:pi sent print: <glen3b: success: Received the program!>
+bootloader: Done.
+TRACE:should detect memory overflow at 1 byte past block end
+TRACE:ERROR:Allocated block 1 [0x183ef8] corrupted at offset -4
+TRACE:	logical block id=1, [addr=0x183ef8] nbytes=4
+TRACE:	Block allocated at: tests/1-purify-bug.c:notmain:9
+TRACE:ERROR:Allocated block 1 [0x183ef8] corrupted at offset -3
+TRACE:	logical block id=1, [addr=0x183ef8] nbytes=4
+TRACE:	Block allocated at: tests/1-purify-bug.c:notmain:9
+PANIC:../../labs/9-memcheck-stat/code.staff/ckalloc.c:ckalloc:150:mem_check(h, ck_get_rz1(h), rn)
+DONE!!!
+
+bootloader: pi exited.  cleaning up

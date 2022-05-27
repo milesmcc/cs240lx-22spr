@@ -1,5 +1,8 @@
 TRACE:should detect use after free bug (store at offset 3)
-TRACE:: store to address 0x183efb
-TRACE:ERROR: use after free at  within freed block
+TRACE:ERROR:Allocated block 1  corrupted at offset -4
 TRACE:	logical block id=1,  nbytes=4
 TRACE:	Block allocated at: tests/3-purify-free-bug.c:notmain:9
+TRACE:ERROR:Allocated block 1  corrupted at offset -3
+TRACE:	logical block id=1,  nbytes=4
+TRACE:	Block allocated at: tests/3-purify-free-bug.c:notmain:9
+PANIC:../../labs/9-memcheck-stat/code.staff/ckalloc.c:ckalloc:150:mem_check(h, ck_get_rz1(h), rn)

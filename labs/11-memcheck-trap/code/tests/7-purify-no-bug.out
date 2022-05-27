@@ -1,25 +1,8 @@
 TRACE:should have no error: running w verbose off
-TRACE:: load from address 0x183ef8
-TRACE:: store to address 0x183ef8
-TRACE:: load from address 0x183ef8
-TRACE:: store to address 0x183ef8
-TRACE:: load from address 0x183ef8
-TRACE:: store to address 0x183ef8
-TRACE:: load from address 0x183ef8
-TRACE:: store to address 0x183ef8
-TRACE:: load from address 0x183ef8
-TRACE:: store to address 0x183ef8
-TRACE:: load from address 0x183ef8
-TRACE:: store to address 0x183ef8
-TRACE:: load from address 0x183ef8
-TRACE:: store to address 0x183ef8
-TRACE:: load from address 0x183ef8
-TRACE:: store to address 0x183ef8
-TRACE:: load from address 0x183ef8
-TRACE:: store to address 0x183ef8
-TRACE:: load from address 0x183ef8
-TRACE:: store to address 0x183ef8
-TRACE:: load from address 0x183ef8
-TRACE:: load from address 0x183ef8
-TRACE:: load from address 0x183ef8
-TRACE:SUCCESS: no bug
+TRACE:ERROR:Allocated block 1  corrupted at offset -4
+TRACE:	logical block id=1,  nbytes=4
+TRACE:	Block allocated at: tests/7-purify-no-bug.c:fn:9
+TRACE:ERROR:Allocated block 1  corrupted at offset -3
+TRACE:	logical block id=1,  nbytes=4
+TRACE:	Block allocated at: tests/7-purify-no-bug.c:fn:9
+PANIC:../../labs/9-memcheck-stat/code.staff/ckalloc.c:ckalloc:150:mem_check(h, ck_get_rz1(h), rn)

@@ -1,6 +1,8 @@
 TRACE:should detect use after free
-TRACE:corrupting 
-TRACE:: store to address 0x182ccd
-TRACE:ERROR: illegal store to to FREED block at  is 3 bytes after legal mem (block size=171)
-TRACE:	logical block id=5,  nbytes=171
+TRACE:ERROR:Allocated block 1  corrupted at offset -4
+TRACE:	logical block id=1,  nbytes=824
 TRACE:	Block allocated at: tests/4-purify-bug.c:notmain:17
+TRACE:ERROR:Allocated block 1  corrupted at offset -3
+TRACE:	logical block id=1,  nbytes=824
+TRACE:	Block allocated at: tests/4-purify-bug.c:notmain:17
+PANIC:../../labs/9-memcheck-stat/code.staff/ckalloc.c:ckalloc:150:mem_check(h, ck_get_rz1(h), rn)
